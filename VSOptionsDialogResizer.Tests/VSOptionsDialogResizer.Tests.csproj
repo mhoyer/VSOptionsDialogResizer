@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Machine.Fakes">
       <HintPath>..\packages\Machine.Fakes.1.0.0\lib\net40\Machine.Fakes.dll</HintPath>
     </Reference>
@@ -60,10 +63,23 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Connect.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VSOptionsDialogResizer.Addin\VSOptionsDialogResizer.Addin.csproj">
+      <Project>{54C786E5-FD14-4036-92AE-E9F25B71534B}</Project>
+      <Name>VSOptionsDialogResizer.Addin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VSOptionsDialogResizer\VSOptionsDialogResizer.csproj">
+      <Project>{76B996A9-D46E-478A-8A02-C41F758C9EDD}</Project>
+      <Name>VSOptionsDialogResizer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

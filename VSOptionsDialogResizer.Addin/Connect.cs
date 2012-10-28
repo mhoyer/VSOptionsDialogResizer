@@ -8,10 +8,15 @@ namespace VSOptionsDialogResizer.Addin
 	/// <seealso class='IDTExtensibility2' />
 	public class Connect : IDTExtensibility2
 	{
-		/// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
-		public Connect()
-		{
-		}
+	    readonly IOptionsDialogWatcher _optionsDialogWatcher;
+
+        /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
+        /// <param name="subject"> </param>
+        /// <param name="optionsDialogWatcher"> </param>
+        public Connect(IOptionsDialogWatcher optionsDialogWatcher)
+        {
+            _optionsDialogWatcher = optionsDialogWatcher;
+        }
 
 		/// <summary>Implements the OnConnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being loaded.</summary>
 		/// <param term='application'>Root object of the host application.</param>
@@ -45,6 +50,7 @@ namespace VSOptionsDialogResizer.Addin
 		/// <seealso class='IDTExtensibility2' />
 		public void OnStartupComplete(ref Array custom)
 		{
+		    _optionsDialogWatcher.Listen(IntPtr.Zero);
 		}
 
 		/// <summary>Implements the OnBeginShutdown method of the IDTExtensibility2 interface. Receives notification that the host application is being unloaded.</summary>
