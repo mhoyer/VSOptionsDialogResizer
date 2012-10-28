@@ -6,6 +6,7 @@ namespace VSOptionsDialogResizer
     public class OptionsDialogWatcher : IOptionsDialogWatcher
     {
         readonly IOptionsDialogFinder _optionsDialogFinder;
+        BackgroundWorker _listenWorker;
 
         public OptionsDialogWatcher(IOptionsDialogFinder optionsDialogFinder)
         {
@@ -14,16 +15,30 @@ namespace VSOptionsDialogResizer
 
         public void Listen(IntPtr mainWindow)
         {
-            using (var bw = new BackgroundWorker())
+            if (_listenWorker == null)
             {
-                bw.DoWork += ListenForOptionsDialog;
-                bw.RunWorkerAsync(mainWindow);
+                _listenWorker = new BackgroundWorker();
+
+                _listenWorker.DoWork += ListenForOptionsDialog;
+                _listenWorker.WorkerSupportsCancellation = true;
             }
+
+            if (_listenWorker.IsBusy) return;
+
+            _listenWorker.RunWorkerAsync(mainWindow);
+        }
+
+        public void Stop()
+        {
+            if (_listenWorker == null) return;
+
+            _listenWorker.CancelAsync();
         }
 
         void ListenForOptionsDialog(object sender, DoWorkEventArgs e)
         {
             var mainWindow = (IntPtr) e.Argument;
+            var backgroundWorker = (BackgroundWorker) sender;
 
             while (true)
             {
@@ -31,6 +46,12 @@ namespace VSOptionsDialogResizer
 
                 if (optionsDialogWindow != IntPtr.Zero)
                 {
+                    
+                }
+
+                if (backgroundWorker.CancellationPending)
+                {
+                    e.Cancel = true;
                     break;
                 }
             }
