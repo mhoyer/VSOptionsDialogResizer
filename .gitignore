@@ -1,5 +1,11 @@
-pom.xml
-*jar
-/lib/
-/classes/
-.lein-deps-sum
+Bin/
+bin/
+Obj/
+obj/
+
+*.cache
+*.user
+*.suo
+*.Resharper
+packages/
+
