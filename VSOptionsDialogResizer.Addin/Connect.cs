@@ -12,6 +12,12 @@ namespace VSOptionsDialogResizer.Addin
 
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
         /// <param name="subject"> </param>
+        public Connect() : this(new OptionsDialogWatcher())
+        {
+        }
+
+        /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
+        /// <param name="subject"> </param>
         /// <param name="optionsDialogWatcher"> </param>
         public Connect(IOptionsDialogWatcher optionsDialogWatcher)
         {
