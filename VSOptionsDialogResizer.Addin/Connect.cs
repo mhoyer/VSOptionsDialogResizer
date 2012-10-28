@@ -34,7 +34,7 @@ namespace VSOptionsDialogResizer.Addin
             _applicationObject = (DTE2)application;
             _addInInstance = (AddIn)addInInst;
 
-            _optionsDialogWatcher.Listen(IntPtr.Zero);
+            _optionsDialogWatcher.Listen(new IntPtr(_applicationObject.MainWindow.HWnd));
         }
 
         /// <summary>Implements the OnDisconnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being unloaded.</summary>
