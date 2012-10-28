@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Linq;
 using Extensibility;
 using EnvDTE;
 using EnvDTE80;
+using SimpleInjector;
+using SimpleInjector.Extensions;
+
 namespace VSOptionsDialogResizer.Addin
 {
     /// <summary>The object for implementing an Add-in.</summary>
@@ -11,13 +15,25 @@ namespace VSOptionsDialogResizer.Addin
         readonly IOptionsDialogWatcher _optionsDialogWatcher;
 
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
-        /// <param name="subject"> </param>
-        public Connect() : this(new OptionsDialogWatcher())
+        public Connect()
         {
+            var assembly = typeof(IOptionsDialogWatcher).Assembly;
+
+            var registrations = from type in assembly.GetExportedTypes()
+                                where type.GetInterfaces().Length > 0
+                                select new
+                                    {
+                                        Interface = type.GetInterfaces().First(),
+                                        Implementation = type
+                                    };
+
+            var container = new Container();
+            registrations.ToList().ForEach(r => container.Register(r.Interface, r.Implementation));
+
+            _optionsDialogWatcher = container.GetInstance<IOptionsDialogWatcher>();
         }
 
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
-        /// <param name="subject"> </param>
         /// <param name="optionsDialogWatcher"> </param>
         public Connect(IOptionsDialogWatcher optionsDialogWatcher)
         {
