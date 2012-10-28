@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Forms;
 using Extensibility;
 using EnvDTE;
 using EnvDTE80;
@@ -17,20 +18,26 @@ namespace VSOptionsDialogResizer.Addin
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
         public Connect()
         {
-            var assembly = typeof(IOptionsDialogWatcher).Assembly;
-
-            var registrations = from type in assembly.GetExportedTypes()
-                                where type.GetInterfaces().Length > 0
-                                select new
+            try
+            {
+                var assembly = typeof(IOptionsDialogWatcher).Assembly;
+                var registrations = from type in assembly.GetExportedTypes()
+                                    where type.GetInterfaces().Length > 0
+                                    select new
                                     {
                                         Interface = type.GetInterfaces().First(),
                                         Implementation = type
                                     };
 
-            var container = new Container();
-            registrations.ToList().ForEach(r => container.Register(r.Interface, r.Implementation));
+                var container = new Container();
+                registrations.ToList().ForEach(r => container.Register(r.Interface, r.Implementation));
 
-            _optionsDialogWatcher = container.GetInstance<IOptionsDialogWatcher>();
+                _optionsDialogWatcher = container.GetInstance<IOptionsDialogWatcher>();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>Implements the constructor for the Add-in object. Place your initialization code within this method.</summary>
@@ -47,10 +54,18 @@ namespace VSOptionsDialogResizer.Addin
         /// <seealso class='IDTExtensibility2' />
         public void OnConnection(object application, ext_ConnectMode connectMode, object addInInst, ref Array custom)
         {
-            _applicationObject = (DTE2)application;
-            _addInInstance = (AddIn)addInInst;
+            try
+            {
+                _applicationObject = (DTE2)application;
+                _addInInstance = (AddIn)addInInst;
 
-            _optionsDialogWatcher.Listen(new IntPtr(_applicationObject.MainWindow.HWnd));
+                if (_optionsDialogWatcher == null) return;
+                _optionsDialogWatcher.Listen(new IntPtr(_applicationObject.MainWindow.HWnd));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>Implements the OnDisconnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being unloaded.</summary>
