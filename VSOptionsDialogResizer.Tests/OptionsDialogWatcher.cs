@@ -17,6 +17,10 @@ namespace VSOptionsDialogResizer.Tests
                 .WasToldTo(f => f.Find(_devenvMainWindow))
                 .OnlyOnce();
 
+        It should_not_hook_up_the_modifier_refresh_cycle = () => 
+            The<IOptionsDialogModifier>()
+                .WasNotToldTo(f => f.RefreshUntilClose(Param.IsAny<IntPtr>()));
+
         static readonly IntPtr _devenvMainWindow = new IntPtr(1);
     }
 }
