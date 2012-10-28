@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace VSOptionsDialogResizer
 {
@@ -13,10 +14,21 @@ namespace VSOptionsDialogResizer
 
         public void Listen(IntPtr mainWindow)
         {
-            while(true)
+            using (var bw = new BackgroundWorker())
+            {
+                bw.DoWork += ListenForOptionsDialog;
+                bw.RunWorkerAsync(mainWindow);
+            }
+        }
+
+        void ListenForOptionsDialog(object sender, DoWorkEventArgs e)
+        {
+            var mainWindow = (IntPtr) e.Argument;
+
+            while (true)
             {
                 var optionsDialogWindow = _optionsDialogFinder.Find(mainWindow);
-                
+
                 if (optionsDialogWindow != IntPtr.Zero)
                 {
                     break;
