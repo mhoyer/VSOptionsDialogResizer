@@ -13,7 +13,15 @@ namespace VSOptionsDialogResizer
 
         public void Listen(IntPtr mainWindow)
         {
-            _optionsDialogFinder.Find(mainWindow);
+            while(true)
+            {
+                var optionsDialogWindow = _optionsDialogFinder.Find(mainWindow);
+                
+                if (optionsDialogWindow != IntPtr.Zero)
+                {
+                    break;
+                }
+            }
         }
     }
 }

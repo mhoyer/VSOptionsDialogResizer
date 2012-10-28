@@ -6,12 +6,20 @@ namespace VSOptionsDialogResizer.Tests
 {
     public class when_listening_for_options_dialog_to_open : WithSubject<OptionsDialogWatcher>
     {
-        Because of = () => Subject.Listen(new IntPtr(42));
+        Establish context = () =>
+            {
+                The<IOptionsDialogFinder>()
+                    .WhenToldTo(f => f.Find(Param.IsAny<IntPtr>()))
+                    .Return(_optionsDlgWindow);
+            };
 
-        It should_try_to_find_the_options_dialog = 
-            () => The<IOptionsDialogFinder>().WasToldTo(f => f.Find(new IntPtr(42)));
+        Because of = () => Subject.Listen(_devenvMainWindow);
 
-        It should_try_to_find_the_options_dialog_multiple_times = 
-            () => The<IOptionsDialogFinder>().WasToldTo(f => f.Find(new IntPtr(42)));
+        It should_try_to_find_the_options_dialog = () => 
+            The<IOptionsDialogFinder>()
+                .WasToldTo(f => f.Find(_devenvMainWindow));
+
+        static readonly IntPtr _devenvMainWindow = new IntPtr(1);
+        static readonly IntPtr _optionsDlgWindow = new IntPtr(2);
     }
 }
