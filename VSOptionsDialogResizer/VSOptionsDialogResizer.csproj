@@ -42,6 +42,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="IOptionsDialogFinder.cs" />
     <Compile Include="IOptionsDialogWatcher.cs" />
     <Compile Include="OptionsDialogWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
