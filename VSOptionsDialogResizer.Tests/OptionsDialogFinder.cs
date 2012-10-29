@@ -14,15 +14,18 @@ namespace VSOptionsDialogResizer.Tests
                 .Return(new[] { OptionsWindow });
         };
 
-        Because of = () => Subject.Find(DevenvMainWindow);
+        Because of = () => _result = Subject.Find(DevenvMainWindow);
 
         It should_search_for_windows_with_Options_caption = 
             () => The<IPInvoker>().WasToldTo(p => p.FindWindows("Options"));
+
+        It should_return_found_Options_window = () => _result.ShouldEqual(OptionsWindow);
 
         It should_compare_found_Options_windows_with_given_parent_window_handle = 
             () => The<IPInvoker>().WasToldTo(p => p.GetWindow(OptionsWindow, GetWindowCmd.GW_OWNER));
 
         protected static readonly IntPtr DevenvMainWindow = new IntPtr(1);
         protected static readonly IntPtr OptionsWindow = new IntPtr(2);
+        static IntPtr _result;
     }
 }

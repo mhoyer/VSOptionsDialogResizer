@@ -17,7 +17,7 @@ namespace VSOptionsDialogResizer
         {
             var optionsWindows = _pinvoker.FindWindows("Options");
             _pinvoker.GetWindow(optionsWindows.First(), GetWindowCmd.GW_OWNER);
-            return IntPtr.Zero;
+            return optionsWindows.First();
         }
     }
 }
