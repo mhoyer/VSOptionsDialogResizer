@@ -4,50 +4,49 @@ using Machine.Specifications;
 
 namespace VSOptionsDialogResizer.Tests
 {
-    public class when_listening_for_options_dialog_to_open : WithSubject<OptionsDialogWatcher>
+    public class when_listening_for_options_dialog_to_open : WithOptionsDialogWatcher
     {
-        Because of = () => Subject.Listen(_devenvMainWindow);
+        Because of = () => Subject.Listen(DevenvMainWindow);
 
         It should_start_the_cyclic_background_checks =
             () => The<ICyclicBackgroundWorker>()
                     .WasToldTo(c => c.Start(200, Param.IsAny<Action>()));
-
-        static readonly IntPtr _devenvMainWindow = new IntPtr(1);
     }
 
-    public class when_looking_for_the_options_dialog : WithSubject<OptionsDialogWatcher>
+    public class when_waiting_for_the_options_dialog_to_open : WithOptionsDialogWatcher
     {
-        Because of = () => Subject.FindOptionsDialog(_devenvMainWindow);
+        Because of = () => Subject.FindOptionsDialog(DevenvMainWindow);
 
         It should_try_to_find_the_options_dialog_once = () => 
             The<IOptionsDialogFinder>()
-                .WasToldTo(f => f.Find(_devenvMainWindow))
+                .WasToldTo(f => f.Find(DevenvMainWindow))
                 .OnlyOnce();
 
         It should_not_hook_up_the_modifier_refresh_cycle = () => 
             The<IOptionsDialogModifier>()
                 .WasNotToldTo(f => f.RefreshUntilClose(Param.IsAny<IntPtr>()));
-
-        static readonly IntPtr _devenvMainWindow = new IntPtr(1);
     }
 
-    public class when_options_dialog_was_opened : WithSubject<OptionsDialogWatcher>
+    public class when_options_dialog_was_opened : WithOptionsDialogWatcher
     {
         Establish context = () =>
             {
                 The<IOptionsDialogFinder>()
                     .WhenToldTo(f => f.Find(Param.IsAny<IntPtr>()))
-                    .Return(_optionsDialogWindow);
+                    .Return(OptionsDialogWindow);
             };
 
-        Because of = () => Subject.FindOptionsDialog(_devenvMainWindow);
+        Because of = () => Subject.FindOptionsDialog(DevenvMainWindow);
 
         It should_hook_up_the_arrangers = () => 
             The<IOptionsDialogModifier>()
-                .WasToldTo(f => f.RefreshUntilClose(_optionsDialogWindow))
+                .WasToldTo(f => f.RefreshUntilClose(OptionsDialogWindow))
                 .OnlyOnce();
-
-        static readonly IntPtr _devenvMainWindow = new IntPtr(1);
-        static readonly IntPtr _optionsDialogWindow = new IntPtr(2);
+    }
+    
+    public class WithOptionsDialogWatcher : WithSubject<OptionsDialogWatcher>
+    {
+        protected static readonly IntPtr DevenvMainWindow = new IntPtr(1);
+        protected static readonly IntPtr OptionsDialogWindow = new IntPtr(2);
     }
 }
