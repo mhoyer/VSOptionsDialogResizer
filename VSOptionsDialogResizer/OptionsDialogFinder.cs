@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using VSOptionsDialogResizer.PInvoke;
 
 namespace VSOptionsDialogResizer
 {
@@ -13,7 +15,8 @@ namespace VSOptionsDialogResizer
 
         public IntPtr Find(IntPtr devenvMainWindow)
         {
-            _pinvoker.FindWindows("Options");
+            var optionsWindows = _pinvoker.FindWindows("Options");
+            _pinvoker.GetWindow(optionsWindows.First(), GetWindowCmd.GW_OWNER);
             return IntPtr.Zero;
         }
     }
