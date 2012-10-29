@@ -47,7 +47,9 @@
     <Compile Include="IOptionsDialogFinder.cs" />
     <Compile Include="IOptionsDialogModifier.cs" />
     <Compile Include="IOptionsDialogWatcher.cs" />
+    <Compile Include="IPInvoker.cs" />
     <Compile Include="OptionsDialogWatcher.cs" />
+    <Compile Include="OptionsDialogFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
