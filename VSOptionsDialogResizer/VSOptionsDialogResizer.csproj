@@ -44,7 +44,7 @@
     </Compile>
     <Compile Include="CyclicBackgroundWorker.cs" />
     <Compile Include="PInvoke\GetWindowCmd.cs" />
-    <Compile Include="ICyclicBackgroundWorker.cs" />
+    <Compile Include="ICyclicWorker.cs" />
     <Compile Include="IOptionsDialogFinder.cs" />
     <Compile Include="IOptionsDialogModifier.cs" />
     <Compile Include="IOptionsDialogWatcher.cs" />

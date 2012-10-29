@@ -9,7 +9,7 @@ namespace VSOptionsDialogResizer.Tests
         Because of = () => Subject.Listen(DevenvMainWindow);
 
         It should_start_the_cyclic_background_checks =
-            () => The<ICyclicBackgroundWorker>()
+            () => The<ICyclicWorker>()
                     .WasToldTo(c => c.Start(200, Param.IsAny<Action>()));
     }
 

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace VSOptionsDialogResizer
 {
-    public class CyclicBackgroundWorker : ICyclicBackgroundWorker
+    public class CyclicBackgroundWorker : ICyclicWorker
     {
         readonly BackgroundWorker _worker;
 

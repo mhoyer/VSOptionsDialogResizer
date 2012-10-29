@@ -6,12 +6,12 @@ namespace VSOptionsDialogResizer
     {
         readonly IOptionsDialogFinder _optionsDialogFinder;
         readonly IOptionsDialogModifier _optionsDialogModifier;
-        readonly ICyclicBackgroundWorker _cyclicBackgroundWorker;
+        readonly ICyclicWorker _cyclicBackgroundWorker;
 
         public OptionsDialogWatcher(
             IOptionsDialogFinder optionsDialogFinder,
             IOptionsDialogModifier optionsDialogModifier,
-            ICyclicBackgroundWorker cyclicBackgroundWorker)
+            ICyclicWorker cyclicBackgroundWorker)
         {
             _optionsDialogFinder = optionsDialogFinder;
             _optionsDialogModifier = optionsDialogModifier;

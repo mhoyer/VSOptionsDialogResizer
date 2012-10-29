@@ -2,7 +2,7 @@ using System;
 
 namespace VSOptionsDialogResizer
 {
-    public interface ICyclicBackgroundWorker
+    public interface ICyclicWorker
     {
         void Start(int sleep, Action action);
         void Stop();
