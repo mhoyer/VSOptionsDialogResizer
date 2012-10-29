@@ -42,6 +42,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CyclicBackgroundWorker.cs" />
+    <Compile Include="ICyclicBackgroundWorker.cs" />
     <Compile Include="IOptionsDialogFinder.cs" />
     <Compile Include="IOptionsDialogModifier.cs" />
     <Compile Include="IOptionsDialogWatcher.cs" />

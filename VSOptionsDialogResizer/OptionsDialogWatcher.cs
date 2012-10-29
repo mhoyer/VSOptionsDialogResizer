@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 
 namespace VSOptionsDialogResizer
 {
@@ -7,58 +6,29 @@ namespace VSOptionsDialogResizer
     {
         readonly IOptionsDialogFinder _optionsDialogFinder;
         readonly IOptionsDialogModifier _optionsDialogModifier;
-        BackgroundWorker _listenWorker;
+        readonly ICyclicBackgroundWorker _cyclicBackgroundWorker;
 
         public OptionsDialogWatcher(
             IOptionsDialogFinder optionsDialogFinder,
-            IOptionsDialogModifier optionsDialogModifier)
+            IOptionsDialogModifier optionsDialogModifier,
+            ICyclicBackgroundWorker cyclicBackgroundWorker)
         {
             _optionsDialogFinder = optionsDialogFinder;
             _optionsDialogModifier = optionsDialogModifier;
+            _cyclicBackgroundWorker = cyclicBackgroundWorker;
         }
 
         public void Listen(IntPtr mainWindow)
         {
-            if (_listenWorker == null)
-            {
-                _listenWorker = new BackgroundWorker();
-
-                _listenWorker.DoWork += ListenForOptionsDialog;
-                _listenWorker.WorkerSupportsCancellation = true;
-            }
-
-            if (_listenWorker.IsBusy) return;
-
-            _listenWorker.RunWorkerAsync(mainWindow);
+            _cyclicBackgroundWorker.Start(200, () => FindOptionsDialog(mainWindow));
         }
 
-        public void Stop()
+        public void FindOptionsDialog(IntPtr mainWindow)
         {
-            if (_listenWorker == null) return;
+            var optionsDialogWindow = _optionsDialogFinder.Find(mainWindow);
 
-            _listenWorker.CancelAsync();
-        }
-
-        void ListenForOptionsDialog(object sender, DoWorkEventArgs e)
-        {
-            var mainWindow = (IntPtr) e.Argument;
-            var backgroundWorker = (BackgroundWorker) sender;
-
-            while (true)
-            {
-                var optionsDialogWindow = _optionsDialogFinder.Find(mainWindow);
-
-                if (optionsDialogWindow != IntPtr.Zero)
-                {
-                    _optionsDialogModifier.RefreshUntilClose(optionsDialogWindow);
-                }
-
-                if (backgroundWorker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    break;
-                }
-            }
+            if (optionsDialogWindow != IntPtr.Zero)
+                _optionsDialogModifier.RefreshUntilClose(optionsDialogWindow);
         }
     }
 }
