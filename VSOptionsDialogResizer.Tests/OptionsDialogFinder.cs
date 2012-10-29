@@ -11,26 +11,26 @@ namespace VSOptionsDialogResizer.Tests
         {
             The<IPInvoker>()
                 .WhenToldTo(p => p.FindWindows("Options"))
-                .Return(new[] { OptionsWindow, OtherOptionsWindow });
+                .Return(new[] { _optionsWindow, _otherOptionsWindow });
             
             The<IPInvoker>()
-                .WhenToldTo(p => p.GetWindow(OptionsWindow, GetWindowCmd.GW_OWNER))
-                .Return(DevenvMainWindow);
+                .WhenToldTo(p => p.GetWindow(_optionsWindow, GetWindowCmd.GW_OWNER))
+                .Return(_devenvMainWindow);
         };
 
-        Because of = () => _result = Subject.Find(DevenvMainWindow);
+        Because of = () => _result = Subject.Find(_devenvMainWindow);
 
         It should_search_for_windows_with_Options_caption = 
             () => The<IPInvoker>().WasToldTo(p => p.FindWindows("Options"));
 
-        It should_return_found_Options_window = () => _result.ShouldEqual(OptionsWindow);
+        It should_return_found_Options_window = () => _result.ShouldEqual(_optionsWindow);
 
         It should_compare_found_Options_windows_with_given_parent_window_handle = 
-            () => The<IPInvoker>().WasToldTo(p => p.GetWindow(OptionsWindow, GetWindowCmd.GW_OWNER));
+            () => The<IPInvoker>().WasToldTo(p => p.GetWindow(_optionsWindow, GetWindowCmd.GW_OWNER));
 
-        protected static readonly IntPtr DevenvMainWindow = new IntPtr(1);
-        protected static readonly IntPtr OptionsWindow = new IntPtr(2);
-        protected static readonly IntPtr OtherOptionsWindow = new IntPtr(3);
+        static readonly IntPtr _devenvMainWindow = new IntPtr(1);
+        static readonly IntPtr _optionsWindow = new IntPtr(2);
+        static readonly IntPtr _otherOptionsWindow = new IntPtr(3);
         static IntPtr _result;
     }
 }
