@@ -51,6 +51,8 @@
     <Compile Include="PInvoke\IPInvoker.cs" />
     <Compile Include="OptionsDialogWatcher.cs" />
     <Compile Include="OptionsDialogFinder.cs" />
+    <Compile Include="PInvoke\StaticPInvoke.cs" />
+    <Compile Include="PInvoke\PInvoker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
