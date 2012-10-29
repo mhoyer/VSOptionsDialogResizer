@@ -48,7 +48,7 @@
     <Compile Include="IOptionsDialogFinder.cs" />
     <Compile Include="IOptionsDialogModifier.cs" />
     <Compile Include="IOptionsDialogWatcher.cs" />
-    <Compile Include="IPInvoker.cs" />
+    <Compile Include="PInvoke\IPInvoker.cs" />
     <Compile Include="OptionsDialogWatcher.cs" />
     <Compile Include="OptionsDialogFinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

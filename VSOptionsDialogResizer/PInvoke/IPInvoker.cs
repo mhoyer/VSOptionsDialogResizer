@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using VSOptionsDialogResizer.PInvoke;
 
-namespace VSOptionsDialogResizer
+namespace VSOptionsDialogResizer.PInvoke
 {
     public interface IPInvoker
     {
