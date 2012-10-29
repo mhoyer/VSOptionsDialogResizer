@@ -6,7 +6,7 @@ namespace VSOptionsDialogResizer
 {
     public class CyclicBackgroundWorker : ICyclicBackgroundWorker
     {
-        BackgroundWorker _worker;
+        readonly BackgroundWorker _worker;
 
         public CyclicBackgroundWorker()
         {

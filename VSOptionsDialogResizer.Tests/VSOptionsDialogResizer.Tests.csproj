@@ -72,6 +72,7 @@
     <Compile Include="Connect.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CyclicBackgroundWorker.cs" />
     <Compile Include="OptionsDialogWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
