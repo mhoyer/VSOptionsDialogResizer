@@ -11,7 +11,11 @@ namespace VSOptionsDialogResizer.Tests
         {
             The<IPInvoker>()
                 .WhenToldTo(p => p.FindWindows("Options"))
-                .Return(new[] { OptionsWindow });
+                .Return(new[] { OptionsWindow, OtherOptionsWindow });
+            
+            The<IPInvoker>()
+                .WhenToldTo(p => p.GetWindow(OptionsWindow, GetWindowCmd.GW_OWNER))
+                .Return(DevenvMainWindow);
         };
 
         Because of = () => _result = Subject.Find(DevenvMainWindow);
@@ -26,6 +30,7 @@ namespace VSOptionsDialogResizer.Tests
 
         protected static readonly IntPtr DevenvMainWindow = new IntPtr(1);
         protected static readonly IntPtr OptionsWindow = new IntPtr(2);
+        protected static readonly IntPtr OtherOptionsWindow = new IntPtr(3);
         static IntPtr _result;
     }
 }
