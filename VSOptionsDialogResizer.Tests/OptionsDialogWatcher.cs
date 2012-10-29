@@ -23,4 +23,28 @@ namespace VSOptionsDialogResizer.Tests
 
         static readonly IntPtr _devenvMainWindow = new IntPtr(1);
     }
+
+    public class when_options_dialog_was_opened : WithSubject<OptionsDialogWatcher>
+    {
+        Establish context = () =>
+            {
+                The<IOptionsDialogFinder>()
+                    .WhenToldTo(f => f.Find(Param.IsAny<IntPtr>()))
+                    .Return(_optionsDialogWindow);
+            };
+
+        Because of = () =>
+            {
+                Subject.Listen(_devenvMainWindow);
+                Subject.Stop();
+            };
+
+        It should_hook_up_the_arrangers = () => 
+            The<IOptionsDialogModifier>()
+                .WasToldTo(f => f.RefreshUntilClose(_optionsDialogWindow))
+                .OnlyOnce();
+
+        static readonly IntPtr _devenvMainWindow = new IntPtr(1);
+        static readonly IntPtr _optionsDialogWindow = new IntPtr(2);
+    }
 }

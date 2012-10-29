@@ -6,11 +6,15 @@ namespace VSOptionsDialogResizer
     public class OptionsDialogWatcher : IOptionsDialogWatcher
     {
         readonly IOptionsDialogFinder _optionsDialogFinder;
+        readonly IOptionsDialogModifier _optionsDialogModifier;
         BackgroundWorker _listenWorker;
 
-        public OptionsDialogWatcher(IOptionsDialogFinder optionsDialogFinder)
+        public OptionsDialogWatcher(
+            IOptionsDialogFinder optionsDialogFinder,
+            IOptionsDialogModifier optionsDialogModifier)
         {
             _optionsDialogFinder = optionsDialogFinder;
+            _optionsDialogModifier = optionsDialogModifier;
         }
 
         public void Listen(IntPtr mainWindow)
@@ -46,7 +50,7 @@ namespace VSOptionsDialogResizer
 
                 if (optionsDialogWindow != IntPtr.Zero)
                 {
-                    
+                    _optionsDialogModifier.RefreshUntilClose(optionsDialogWindow);
                 }
 
                 if (backgroundWorker.CancellationPending)
