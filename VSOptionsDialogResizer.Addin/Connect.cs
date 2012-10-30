@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using Extensibility;
@@ -21,8 +22,15 @@ namespace VSOptionsDialogResizer.Addin
             try
             {
                 var assembly = typeof(IOptionsDialogWatcher).Assembly;
-                var registrations = from type in assembly.GetExportedTypes()
+                var exportedTypes = assembly.GetExportedTypes();
+
+                var interfaces = from type in exportedTypes
+                                 where type.IsInterface
+                                 select type;
+
+                var registrations = from type in exportedTypes
                                     where type.GetInterfaces().Length > 0
+                                    where interfaces.Any(i => i.IsAssignableFrom(type))
                                     select new
                                     {
                                         Interface = type.GetInterfaces().First(),
@@ -36,6 +44,7 @@ namespace VSOptionsDialogResizer.Addin
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("{0}\r\n{1}", ex.Message, ex.StackTrace);
                 MessageBox.Show(ex.Message);
             }
         }
