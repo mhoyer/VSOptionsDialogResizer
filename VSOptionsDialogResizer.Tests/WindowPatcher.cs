@@ -14,20 +14,24 @@ namespace VSOptionsDialogResizer.Tests
             () => The<ICyclicWorker>().WasToldTo(w => w.Start(20, Param.IsAny<Action>()));
     }
 
-    public class when_executing_all_modifiers : WithFakes
+    public class when_executing_all_modifiers : WithWindowPatcher
+    {
+        Because of = () => Subject.ExecuteAllModifiers(_window);
+
+        It should_execute_each_modifier = () => Modifiers.ToList().ForEach(m => m.Modify(_window));
+
+        static readonly IntPtr _window = new IntPtr(2);
+    }
+
+    public class WithWindowPatcher : WithFakes
     {
         Establish context = () =>
             {
-                _modifiers = Some<IWindowModifier>();
-                _subject = new WindowPatcher(An<ICyclicWorker>(), _modifiers);
+                Modifiers = Some<IWindowModifier>();
+                Subject = new WindowPatcher(An<ICyclicWorker>(), Modifiers);
             };
 
-        Because of = () => _subject.ExecuteAllModifiers(_window);
-
-        It should_execute_each_modifier = () => _modifiers.ToList().ForEach(m => m.Modify(_window));
-
-        static readonly IntPtr _window = new IntPtr(2);
-        static IList<IWindowModifier> _modifiers;
-        static WindowPatcher _subject;
+        protected static IList<IWindowModifier> Modifiers;
+        protected static WindowPatcher Subject;
     }
 }
