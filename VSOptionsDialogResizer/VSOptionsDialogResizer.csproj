@@ -43,6 +43,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CyclicBackgroundWorker.cs" />
+    <Compile Include="IWindowModifier.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WindowPatcher.cs" />
     <Compile Include="PInvoke\GetWindowCmd.cs" />
     <Compile Include="ICyclicWorker.cs" />
