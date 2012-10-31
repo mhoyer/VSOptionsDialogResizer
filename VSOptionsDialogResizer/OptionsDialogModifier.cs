@@ -13,7 +13,7 @@ namespace VSOptionsDialogResizer
 
         public void RefreshUntilClose(IntPtr optionsDialog)
         {
-            _cyclicWorker.Start(0, null);
+            _cyclicWorker.Start(20, () => {});
         }
     }
 }
