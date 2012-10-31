@@ -6,13 +6,25 @@ namespace VSOptionsDialogResizer.Tests
 {
     public class when_listening_for_options_dialog_to_open : WithOptionsDialogWatcher
     {
+        Establish context = () =>
+            {
+                The<ICyclicWorker>()
+                    .WhenToldTo(c => c.Start(Param<int>.IsAnything, Param<Action>.IsAnything))
+                    .Callback<int, Action>((s,a) => a.Invoke());
+            };
+
         Because of = () => Subject.Listen(DevenvMainWindow);
 
-        It should_start_the_cyclic_background_checks =
+        It should_start_the_cyclic_background_checks_within_200ms =
             () => The<ICyclicWorker>()
-                    .WasToldTo(c => c.Start(200, Param.IsAny<Action>()));
+                    .WasToldTo(c => c.Start(200, Param<Action>.IsAnything));
+
+        It should_start_the_cyclic_background_checks_by_triggering_the_actual_find_action =
+            () => The<IOptionsDialogFinder>()
+                    .WasToldTo(c => c.Find(DevenvMainWindow));
     }
 
+    
     public class when_waiting_for_the_options_dialog_to_open : WithOptionsDialogWatcher
     {
         Because of = () => Subject.FindOptionsDialog(DevenvMainWindow);
