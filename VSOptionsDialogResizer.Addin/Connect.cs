@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -39,6 +40,7 @@ namespace VSOptionsDialogResizer.Addin
 
                 var container = new Container();
                 registrations.ToList().ForEach(r => container.Register(r.Interface, r.Implementation));
+                container.Register<IList<IWindowModifier>>(() => container.GetAllInstances<IWindowModifier>().ToList());
 
                 _optionsDialogWatcher = container.GetInstance<IOptionsDialogWatcher>();
             }
