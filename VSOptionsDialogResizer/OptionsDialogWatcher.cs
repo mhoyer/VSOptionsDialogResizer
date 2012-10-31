@@ -5,16 +5,16 @@ namespace VSOptionsDialogResizer
     public class OptionsDialogWatcher : IOptionsDialogWatcher
     {
         readonly IOptionsDialogFinder _optionsDialogFinder;
-        readonly IOptionsDialogModifier _optionsDialogModifier;
+        readonly IWindowPatcher _windowPatcher;
         readonly ICyclicWorker _cyclicBackgroundWorker;
 
         public OptionsDialogWatcher(
             IOptionsDialogFinder optionsDialogFinder,
-            IOptionsDialogModifier optionsDialogModifier,
+            IWindowPatcher windowPatcher,
             ICyclicWorker cyclicBackgroundWorker)
         {
             _optionsDialogFinder = optionsDialogFinder;
-            _optionsDialogModifier = optionsDialogModifier;
+            _windowPatcher = windowPatcher;
             _cyclicBackgroundWorker = cyclicBackgroundWorker;
         }
 
@@ -28,7 +28,7 @@ namespace VSOptionsDialogResizer
             var optionsDialogWindow = _optionsDialogFinder.Find(mainWindow);
 
             if (optionsDialogWindow != IntPtr.Zero)
-                _optionsDialogModifier.RefreshUntilClose(optionsDialogWindow);
+                _windowPatcher.PatchUntilClose(optionsDialogWindow);
         }
     }
 }

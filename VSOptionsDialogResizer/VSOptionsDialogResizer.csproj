@@ -43,11 +43,11 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CyclicBackgroundWorker.cs" />
-    <Compile Include="OptionsDialogModifier.cs" />
+    <Compile Include="WindowPatcher.cs" />
     <Compile Include="PInvoke\GetWindowCmd.cs" />
     <Compile Include="ICyclicWorker.cs" />
     <Compile Include="IOptionsDialogFinder.cs" />
-    <Compile Include="IOptionsDialogModifier.cs" />
+    <Compile Include="IWindowPatcher.cs" />
     <Compile Include="IOptionsDialogWatcher.cs" />
     <Compile Include="PInvoke\IPInvoker.cs" />
     <Compile Include="OptionsDialogWatcher.cs" />

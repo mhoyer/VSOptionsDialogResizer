@@ -2,16 +2,16 @@ using System;
 
 namespace VSOptionsDialogResizer
 {
-    public class OptionsDialogModifier : IOptionsDialogModifier
+    public class WindowPatcher : IWindowPatcher
     {
         readonly ICyclicWorker _cyclicWorker;
 
-        public OptionsDialogModifier(ICyclicWorker cyclicWorker)
+        public WindowPatcher(ICyclicWorker cyclicWorker)
         {
             _cyclicWorker = cyclicWorker;
         }
 
-        public void RefreshUntilClose(IntPtr optionsDialog)
+        public void PatchUntilClose(IntPtr window)
         {
             _cyclicWorker.Start(20, () => {});
         }

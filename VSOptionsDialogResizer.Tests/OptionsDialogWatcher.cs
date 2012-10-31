@@ -15,15 +15,14 @@ namespace VSOptionsDialogResizer.Tests
 
         Because of = () => Subject.Listen(DevenvMainWindow);
 
-        It should_start_the_cyclic_background_checks_within_200ms =
+        It should_start_the_cyclic_lookup_with_200ms_sleep =
             () => The<ICyclicWorker>()
                     .WasToldTo(c => c.Start(200, Param<Action>.IsAnything));
 
-        It should_start_the_cyclic_background_checks_by_triggering_the_actual_find_action =
+        It should_start_the_cyclic_lookup_with_the_actual_find_action =
             () => The<IOptionsDialogFinder>()
                     .WasToldTo(c => c.Find(DevenvMainWindow));
     }
-
     
     public class when_waiting_for_the_options_dialog_to_open : WithOptionsDialogWatcher
     {
@@ -34,9 +33,9 @@ namespace VSOptionsDialogResizer.Tests
                 .WasToldTo(f => f.Find(DevenvMainWindow))
                 .OnlyOnce();
 
-        It should_not_hook_up_the_modifier_refresh_cycle = () => 
-            The<IOptionsDialogModifier>()
-                .WasNotToldTo(f => f.RefreshUntilClose(Param.IsAny<IntPtr>()));
+        It should_not_hook_up_the_window_patcher = () => 
+            The<IWindowPatcher>()
+                .WasNotToldTo(f => f.PatchUntilClose(Param.IsAny<IntPtr>()));
     }
 
     public class when_options_dialog_was_opened : WithOptionsDialogWatcher
@@ -50,9 +49,9 @@ namespace VSOptionsDialogResizer.Tests
 
         Because of = () => Subject.FindOptionsDialog(DevenvMainWindow);
 
-        It should_hook_up_the_arrangers = () => 
-            The<IOptionsDialogModifier>()
-                .WasToldTo(f => f.RefreshUntilClose(OptionsDialogWindow))
+        It should_hook_up_the_window_patcher = () => 
+            The<IWindowPatcher>()
+                .WasToldTo(f => f.PatchUntilClose(OptionsDialogWindow))
                 .OnlyOnce();
     }
     
