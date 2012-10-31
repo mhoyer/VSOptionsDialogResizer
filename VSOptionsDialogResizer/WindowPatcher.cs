@@ -1,16 +1,18 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace VSOptionsDialogResizer
 {
     public class WindowPatcher : IWindowPatcher
     {
         readonly ICyclicWorker _cyclicWorker;
-        readonly IWindowModifier _modifier;
+        readonly IList<IWindowModifier> _modifiers;
 
-        public WindowPatcher(ICyclicWorker cyclicWorker, IWindowModifier modifier)
+        public WindowPatcher(ICyclicWorker cyclicWorker, IList<IWindowModifier> modifiers)
         {
             _cyclicWorker = cyclicWorker;
-            _modifier = modifier;
+            _modifiers = modifiers;
         }
 
         public void PatchUntilClose(IntPtr window)
@@ -18,9 +20,9 @@ namespace VSOptionsDialogResizer
             _cyclicWorker.Start(20, () => {});
         }
 
-        public void ExecuteModifier(IntPtr window)
+        public void ExecuteAllModifiers(IntPtr window)
         {
-            _modifier.Modify(window);
+            _modifiers.ToList().ForEach(m => m.Modify(window));
         }
     }
 }

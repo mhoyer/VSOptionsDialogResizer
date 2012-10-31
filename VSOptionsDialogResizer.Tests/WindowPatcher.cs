@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Machine.Fakes;
 using Machine.Specifications;
 
@@ -12,12 +14,20 @@ namespace VSOptionsDialogResizer.Tests
             () => The<ICyclicWorker>().WasToldTo(w => w.Start(20, Param.IsAny<Action>()));
     }
 
-    public class when_executing_a_modifier : WithSubject<WindowPatcher>
+    public class when_executing_all_modifiers : WithFakes
     {
-        Because of = () => Subject.ExecuteModifier(_optionsDialogWindow);
+        Establish context = () =>
+            {
+                _modifiers = Some<IWindowModifier>();
+                _subject = new WindowPatcher(An<ICyclicWorker>(), _modifiers);
+            };
 
-        It should_execute_ = () => The<IWindowModifier>().WasToldTo(m => m.Modify(_optionsDialogWindow));
+        Because of = () => _subject.ExecuteAllModifiers(_window);
 
-        static readonly IntPtr _optionsDialogWindow = new IntPtr(2);
+        It should_execute_each_modifier = () => _modifiers.ToList().ForEach(m => m.Modify(_window));
+
+        static readonly IntPtr _window = new IntPtr(2);
+        static IList<IWindowModifier> _modifiers;
+        static WindowPatcher _subject;
     }
 }
