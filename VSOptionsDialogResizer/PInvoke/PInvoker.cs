@@ -22,10 +22,17 @@ namespace VSOptionsDialogResizer.PInvoke
             return StaticPInvoke.SetWindowLong(hWnd, nIndex, dwNewLong);
         }
 
-        public void ResizeWindow(IntPtr hWnd, uint width, uint height)
+        public Rect GetWindowRect(IntPtr hWnd)
         {
             Rect rect;
             StaticPInvoke.GetWindowRect(hWnd, out rect);
+
+            return rect;
+        }
+
+        public void ResizeWindow(IntPtr hWnd, uint width, uint height)
+        {
+            Rect rect = GetWindowRect(hWnd);
             StaticPInvoke.MoveWindow(hWnd, rect.X1, rect.Y1, width, height, true);
         }
 
