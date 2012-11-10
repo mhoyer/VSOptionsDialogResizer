@@ -7,6 +7,24 @@ using VSOptionsDialogResizer.WindowModifiers;
 
 namespace VSOptionsDialogResizer.Specs.WindowModifiers
 {
+    public class when_arranging_the_cancel_button_of_the_options_dialog : WithSubject<OkCancelButtonArranger>
+    {
+        Establish context = () =>
+            {
+                The<IPInvoker>()
+                    .WhenToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "Button"))
+                    .Return(new[] { _cancel });
+            };
+
+        Because of = () => Subject.Modify(_optionsWindow, 400, 200);
+
+        It should_determine_cancel_button =
+            () => The<IPInvoker>().WasToldTo(p => p.GetWindowText(_cancel));
+
+        static readonly IntPtr _optionsWindow = new IntPtr(1);
+        static readonly IntPtr _cancel = new IntPtr(3);
+    }
+
     public class when_arranging_the_ok_button_of_the_options_dialog : WithSubject<OkCancelButtonArranger>
     {
         Establish context = () =>
