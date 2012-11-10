@@ -1,6 +1,6 @@
 using System;
 
-namespace VSOptionsDialogResizer
+namespace VSOptionsDialogResizer.WindowModifiers
 {
     public interface IWindowModifier
     {

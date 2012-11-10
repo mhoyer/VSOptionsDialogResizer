@@ -4,6 +4,7 @@ using System.Linq;
 using Machine.Fakes;
 using Machine.Specifications;
 using VSOptionsDialogResizer.PInvoke;
+using VSOptionsDialogResizer.WindowModifiers;
 
 namespace VSOptionsDialogResizer.Tests
 {
