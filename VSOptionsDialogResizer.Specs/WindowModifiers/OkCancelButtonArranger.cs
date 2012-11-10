@@ -47,6 +47,14 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                                                                Param.IsAny<uint>(),
                                                                true));
 
+        It should_set_new_position_of_ok_button_but_keep_the_height =
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
+                                                               Param.IsAny<int>(),
+                                                               Param.IsAny<int>(),
+                                                               Param.IsAny<uint>(),
+                                                               50, // = Y2-Y1
+                                                               true));
+
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _ok = new IntPtr(2);
     }
@@ -65,7 +73,12 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             var button = _pInvoker.FindAllChildrenByClassName(window, "Button").First();
             if (_pInvoker.GetWindowText(button) != "OK") return;
             var buttonRect = _pInvoker.GetWindowRect(button);
-            _pInvoker.MoveWindow(button, 0, 0, buttonRect.Width, 0, true);
+            _pInvoker.MoveWindow(button,
+                                 0,
+                                 0,
+                                 buttonRect.Width,
+                                 buttonRect.Height,
+                                 true);
         }
     }
 }
