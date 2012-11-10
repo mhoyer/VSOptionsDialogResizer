@@ -13,6 +13,9 @@ namespace VSOptionsDialogResizer.PInvoke
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowCmd uCmd);
+        
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
@@ -22,5 +25,8 @@ namespace VSOptionsDialogResizer.PInvoke
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern uint SetWindowLong(IntPtr hWnd, GetWindowLong nIndex, uint dwNewLong);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, uint Width, uint Height, bool Repaint);
     }
 }

@@ -23,6 +23,9 @@ namespace VSOptionsDialogResizer.PInvoke
 
         public void ResizeWindow(IntPtr hWnd, uint width, uint height)
         {
+            Rect rect;
+            StaticPInvoke.GetWindowRect(hWnd, out rect);
+            StaticPInvoke.MoveWindow(hWnd, rect.X1, rect.Y1, width, height, true);
         }
 
         public IEnumerable<IntPtr> FindWindows(string caption)
