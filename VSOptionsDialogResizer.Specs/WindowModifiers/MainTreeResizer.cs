@@ -9,10 +9,17 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
 {
     public class when_arranging_the_main_tree_of_the_options_dialog : WithSubject<MainTreeResizer>
     {
-        Establish context = 
-            () => The<IPInvoker>()
-                .WhenToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "SysTreeView32"))
-                .Return(new[]{_tree});
+        Establish context = () =>
+            {
+                The<IPInvoker>()
+                    .WhenToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "SysTreeView32"))
+                    .Return(new[] { _tree });
+
+                The<IPInvoker>()
+                    .WhenToldTo(p => p.GetWindowRect(_tree))
+                    .Return(new Rect{ X1 = 10, Y1 = 10,
+                                      X2 = 250, Y2 = 500});
+            };
 
         Because of = () => Subject.Modify(_optionsWindow, 400, 200);
 
@@ -22,8 +29,11 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         It should_get_the_rect_of_the_main_tree = 
             () => The<IPInvoker>().WasToldTo(p => p.GetWindowRect(_tree));
 
-        static IntPtr _optionsWindow = new IntPtr(1);
-        static IntPtr _tree = new IntPtr(2);
+        It should_move_the_tree_but_keep_the_x_offset =
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_tree, 10, Param<int>.IsAnything, Param<uint>.IsAnything, Param<uint>.IsAnything, true));
+
+        static readonly IntPtr _optionsWindow = new IntPtr(1);
+        static readonly IntPtr _tree = new IntPtr(2);
     }
 
     public class MainTreeResizer : IWindowModifier
@@ -40,7 +50,8 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             var tree = _pInvoker.FindAllChildrenByClassName(window, "SysTreeView32").FirstOrDefault();
             if (tree == IntPtr.Zero) return;
 
-            _pInvoker.GetWindowRect(tree);
+            var treeRect = _pInvoker.GetWindowRect(tree);
+            _pInvoker.MoveWindow(tree, treeRect.X1, 0, 0, 0, true);
         }
     }
 }
