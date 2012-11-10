@@ -3,7 +3,7 @@ using Machine.Fakes;
 using Machine.Specifications;
 using VSOptionsDialogResizer.PInvoke;
 
-namespace VSOptionsDialogResizer.Tests
+namespace VSOptionsDialogResizer.Specs
 {
     public class when_looking_for_the_options_dialog : WithSubject<OptionsDialogFinder>
     {

@@ -1,7 +1,7 @@
 ﻿using Machine.Fakes;
 using Machine.Specifications;
 
-namespace VSOptionsDialogResizer.Tests
+namespace VSOptionsDialogResizer.Specs
 {
     public class when_starting_a_cyclic_action : WithCyclicWorker
     {

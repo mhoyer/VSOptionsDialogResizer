@@ -2,4 +2,4 @@
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("VSOptionsDialogResizer.AddIn")]
-[assembly: InternalsVisibleTo("VSOptionsDialogResizer.Tests")]
+[assembly: InternalsVisibleTo("VSOptionsDialogResizer.Specs")]

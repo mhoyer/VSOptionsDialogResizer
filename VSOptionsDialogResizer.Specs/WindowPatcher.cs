@@ -6,7 +6,7 @@ using Machine.Specifications;
 using VSOptionsDialogResizer.PInvoke;
 using VSOptionsDialogResizer.WindowModifiers;
 
-namespace VSOptionsDialogResizer.Tests
+namespace VSOptionsDialogResizer.Specs
 {
     public class when_starting_the_refresh_cycle : WithWindowPatcher
     {

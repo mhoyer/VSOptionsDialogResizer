@@ -6,7 +6,7 @@ using Machine.Fakes;
 using Machine.Specifications;
 using VSOptionsDialogResizer.Addin;
 
-namespace VSOptionsDialogResizer.Tests
+namespace VSOptionsDialogResizer.Specs
 {
     public class when_loading_of_Visual_Studio_is_completed : WithSubject<Connect>
     {

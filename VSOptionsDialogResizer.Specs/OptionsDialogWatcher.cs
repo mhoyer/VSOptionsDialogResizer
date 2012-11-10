@@ -2,7 +2,7 @@
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace VSOptionsDialogResizer.Tests
+namespace VSOptionsDialogResizer.Specs
 {
     public class when_listening_for_options_dialog_to_open : WithOptionsDialogWatcher
     {

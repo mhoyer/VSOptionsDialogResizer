@@ -7,8 +7,8 @@
     <ProjectGuid>{D71BB76B-9197-462D-B85E-BBD73A29B6AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VSOptionsDialogResizer.Tests</RootNamespace>
-    <AssemblyName>VSOptionsDialogResizer.Tests</AssemblyName>
+    <RootNamespace>VSOptionsDialogResizer.Specs</RootNamespace>
+    <AssemblyName>VSOptionsDialogResizer.Specs</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
