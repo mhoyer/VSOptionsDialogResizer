@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Machine.Fakes;
 using Machine.Specifications;
 using VSOptionsDialogResizer.PInvoke;
