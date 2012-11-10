@@ -18,6 +18,14 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                 The<IPInvoker>()
                     .WhenToldTo(p => p.GetWindowText(_ok))
                     .Return("OK");
+
+                The<IPInvoker>()
+                    .WhenToldTo(p => p.GetWindowRect(_ok))
+                    .Return(new Rect
+                        {
+                            X1 = 1000, Y1 = 1000,
+                            X2 = 1200, Y2 = 1050
+                        });
             };
 
         Because of = () => Subject.Modify(_optionsWindow, 400, 200);
@@ -31,8 +39,13 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         It should_determine_current_position_of_ok_button =
             () => The<IPInvoker>().WasToldTo(p => p.GetWindowRect(_ok));
 
-        It should_set_new_position_of_ok_button =
-            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok, Param.IsAny<int>(), Param.IsAny<int>(), Param.IsAny<uint>(), Param.IsAny<uint>(), true));
+        It should_set_new_position_of_ok_button_but_keep_the_width =
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
+                                                               Param.IsAny<int>(),
+                                                               Param.IsAny<int>(),
+                                                               200, // = X2-X1
+                                                               Param.IsAny<uint>(),
+                                                               true));
 
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _ok = new IntPtr(2);
@@ -51,8 +64,8 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         {
             var button = _pInvoker.FindAllChildrenByClassName(window, "Button").First();
             if (_pInvoker.GetWindowText(button) != "OK") return;
-            _pInvoker.GetWindowRect(button);
-            _pInvoker.MoveWindow(button, 0, 0, 0, 0, true);
+            var buttonRect = _pInvoker.GetWindowRect(button);
+            _pInvoker.MoveWindow(button, 0, 0, buttonRect.Width, 0, true);
         }
     }
 }
