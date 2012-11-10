@@ -54,6 +54,14 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                                                                50, // = Y2-Y1
                                                                true));
 
+        It should_set_new_position_of_cancel_button_but_set_new_left_offset =
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_cancel,
+                                                               190, // newWidthOfOptionsDialog - widthOfCancel - 10
+                                                               Param.IsAny<int>(),
+                                                               Param.IsAny<uint>(),
+                                                               Param.IsAny<uint>(),
+                                                               true));
+
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _cancel = new IntPtr(3);
     }
@@ -108,7 +116,7 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
 
         It should_set_new_position_of_ok_button_but_set_new_left_offset =
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
-                                                               180, // newWidthOfOptionsDialog - widthOfOk - widthOfCancel - 20
+                                                               180, // newWidthOfOptionsDialog - widthOfOk - 10 - widthOfCancel - 10
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<uint>(),
                                                                Param.IsAny<uint>(),
@@ -137,15 +145,24 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
 
         public void Modify(IntPtr window, uint width, uint height)
         {
-            var button = _pInvoker.FindAllChildrenByClassName(window, "Button").First();
-            if (_pInvoker.GetWindowText(button) != "OK" &&
-                _pInvoker.GetWindowText(button) != "Cancel") return;
-            var buttonRect = _pInvoker.GetWindowRect(button);
-            _pInvoker.MoveWindow(button,
-                                 (int) (width - buttonRect.Width - 20),
-                                 (int) (height - 10 - buttonRect.Height),
-                                 buttonRect.Width,
-                                 buttonRect.Height,
+            var buttons = _pInvoker.FindAllChildrenByClassName(window, "Button");
+            var okButton = buttons.FirstOrDefault(b => _pInvoker.GetWindowText(b) == "OK");
+            var cancelButton = buttons.FirstOrDefault(b => _pInvoker.GetWindowText(b) == "Cancel");
+
+            var okButtonRect = _pInvoker.GetWindowRect(okButton);
+            _pInvoker.MoveWindow(okButton,
+                                 (int) (width - okButtonRect.Width - 20),
+                                 (int) (height - 10 - okButtonRect.Height),
+                                 okButtonRect.Width,
+                                 okButtonRect.Height,
+                                 true);
+
+            var cancelButtonRect = _pInvoker.GetWindowRect(cancelButton);
+            _pInvoker.MoveWindow(cancelButton,
+                                 (int) (width - cancelButtonRect.Width - 10),
+                                 (int) (height - 10 - cancelButtonRect.Height),
+                                 cancelButtonRect.Width,
+                                 cancelButtonRect.Height,
                                  true);
         }
     }
