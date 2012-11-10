@@ -15,5 +15,7 @@ namespace VSOptionsDialogResizer.PInvoke
         Rect GetClientRect(IntPtr hWnd);
         IEnumerable<IntPtr> FindAllChildrenByClassName(IntPtr hWnd, string className);
         string GetClassName(IntPtr hWnd);
+        string GetWindowText(IntPtr hWnd);
+        string GetWindowText(IntPtr hWnd, int nMaxCount);
     }
 }

@@ -94,7 +94,12 @@ namespace VSOptionsDialogResizer.PInvoke
             }, IntPtr.Zero);
         }
 
-        string GetWindowText(IntPtr hWnd, int nMaxCount = 1024)
+        public string GetWindowText(IntPtr hWnd)
+        {
+            return GetWindowText(hWnd, 1024);
+        }
+
+        public string GetWindowText(IntPtr hWnd, int nMaxCount)
         {
             var caption = new StringBuilder(nMaxCount);
             StaticPInvoke.GetWindowText(hWnd, caption, caption.Capacity);
