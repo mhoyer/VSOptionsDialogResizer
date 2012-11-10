@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows.Forms;
 using Extensibility;
 using EnvDTE;
 using EnvDTE80;
-using SimpleInjector;
-using SimpleInjector.Extensions;
 
 namespace VSOptionsDialogResizer.Addin
 {
     /// <summary>The object for implementing an Add-in.</summary>
     /// <seealso class='IDTExtensibility2' />
-    public class Connect : IDTExtensibility2
+    public partial class Connect : IDTExtensibility2
     {
         readonly IOptionsDialogWatcher _optionsDialogWatcher;
 
@@ -22,27 +18,8 @@ namespace VSOptionsDialogResizer.Addin
         {
             try
             {
-                var assembly = typeof(IOptionsDialogWatcher).Assembly;
-                var exportedTypes = assembly.GetExportedTypes();
-
-                var interfaces = from type in exportedTypes
-                                 where type.IsInterface
-                                 select type;
-
-                var registrations = from type in exportedTypes
-                                    where type.GetInterfaces().Length > 0
-                                    where interfaces.Any(i => i.IsAssignableFrom(type))
-                                    select new
-                                    {
-                                        Interface = type.GetInterfaces().First(),
-                                        Implementation = type
-                                    };
-
-                var container = new Container();
-                registrations.ToList().ForEach(r => container.Register(r.Interface, r.Implementation));
-                container.Register<IList<IWindowModifier>>(() => container.GetAllInstances<IWindowModifier>().ToList());
-
-                _optionsDialogWatcher = container.GetInstance<IOptionsDialogWatcher>();
+                InitContainer();
+                _optionsDialogWatcher = _container.GetInstance<IOptionsDialogWatcher>();
             }
             catch (Exception ex)
             {
