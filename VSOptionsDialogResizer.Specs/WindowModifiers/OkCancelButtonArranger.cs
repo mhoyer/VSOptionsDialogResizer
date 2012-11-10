@@ -63,6 +63,14 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                                                                Param.IsAny<uint>(),
                                                                true));
 
+        It should_set_new_position_of_ok_button_but_set_new_top_offset =
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
+                                                               Param.IsAny<int>(),
+                                                               140, // newHeightOfOptionsDialog - heightOfOk - 10
+                                                               Param.IsAny<uint>(),
+                                                               Param.IsAny<uint>(),
+                                                               true));
+
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _ok = new IntPtr(2);
     }
@@ -83,7 +91,7 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             var buttonRect = _pInvoker.GetWindowRect(button);
             _pInvoker.MoveWindow(button,
                                  (int) (width - buttonRect.Width - 20),
-                                 0,
+                                 (int) (height - 10 - buttonRect.Height),
                                  buttonRect.Width,
                                  buttonRect.Height,
                                  true);
