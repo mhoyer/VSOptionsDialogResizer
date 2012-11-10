@@ -17,6 +17,7 @@ namespace VSOptionsDialogResizer
 
         public void PatchUntilClose(IntPtr window)
         {
+            _cyclicWorker.StopAction = () => true;
             _cyclicWorker.Start(20, () => ExecuteAllModifiers(window));
         }
 

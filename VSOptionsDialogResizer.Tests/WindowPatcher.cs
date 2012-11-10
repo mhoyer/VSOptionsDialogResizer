@@ -10,6 +10,9 @@ namespace VSOptionsDialogResizer.Tests
     {
         Because of = () => Subject.PatchUntilClose(_window);
 
+        It should_set_an_explicit_stop_condition =
+            () => Worker.StopAction.ShouldNotBeNull();
+        
         It should_start_the_cyclic_modifier_with_20ms_sleep =
             () => Worker.WasToldTo(w => w.Start(20, Param.IsAny<Action>()));
 
