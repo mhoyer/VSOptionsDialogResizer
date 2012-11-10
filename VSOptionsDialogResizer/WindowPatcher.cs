@@ -22,6 +22,7 @@ namespace VSOptionsDialogResizer
         public void PatchUntilClose(IntPtr optionsWindow)
         {
             _cyclicWorker.StopAction = () => _pInvoker.GetWindow(optionsWindow, GetWindowCmd.GW_OWNER) == IntPtr.Zero;
+            _pInvoker.SetWindowLong(optionsWindow, GetWindowLong.GWL_STYLE, 0);
             _cyclicWorker.Start(20, () => ExecuteAllModifiers(optionsWindow));
         }
 

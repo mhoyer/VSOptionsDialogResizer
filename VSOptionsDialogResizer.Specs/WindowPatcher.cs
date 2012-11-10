@@ -17,6 +17,9 @@ namespace VSOptionsDialogResizer.Specs
 
         It should_set_the_stop_condition_to_check_for_existence_of_options_window =
             () => PInvoker.WasToldTo(p => p.GetWindow(_window, GetWindowCmd.GW_OWNER));
+
+        It should_make_the_options_window_resizable =
+            () => PInvoker.WasToldTo(p => p.SetWindowLong(_window, GetWindowLong.GWL_STYLE, 0));
         
         It should_start_the_cyclic_modifier_with_20ms_sleep =
             () => Worker.WasToldTo(w => w.Start(20, Param.IsAny<Action>()));
