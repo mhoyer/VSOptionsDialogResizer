@@ -33,7 +33,12 @@ namespace VSOptionsDialogResizer.PInvoke
         public void ResizeWindow(IntPtr hWnd, uint width, uint height)
         {
             Rect rect = GetWindowRect(hWnd);
-            StaticPInvoke.MoveWindow(hWnd, rect.X1, rect.Y1, width, height, true);
+            MoveWindow(hWnd, rect.X1, rect.Y1, width, height, true);
+        }
+
+        public void MoveWindow(IntPtr hWnd, int x, int y, uint width, uint height, bool repaint)
+        {
+            StaticPInvoke.MoveWindow(hWnd, x, y, width, height, true);
         }
 
         public Rect GetClientRect(IntPtr hWnd)

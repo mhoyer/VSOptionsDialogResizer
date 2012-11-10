@@ -10,6 +10,7 @@ namespace VSOptionsDialogResizer.PInvoke
         uint GetWindowLong(IntPtr hWnd, GetWindowLong nIndex);
         uint SetWindowLong(IntPtr hWnd, GetWindowLong nIndex, uint dwNewLong);
         Rect GetWindowRect(IntPtr hWnd);
+        void MoveWindow(IntPtr hWnd, int x, int y, uint width, uint height, bool repaint);
         void ResizeWindow(IntPtr hWnd, uint width, uint height);
         Rect GetClientRect(IntPtr hWnd);
         IEnumerable<IntPtr> FindAllChildrenByClassName(IntPtr hWnd, string className);
