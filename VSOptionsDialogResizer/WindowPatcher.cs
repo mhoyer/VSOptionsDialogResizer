@@ -18,15 +18,15 @@ namespace VSOptionsDialogResizer
             _pInvoker = pInvoker;
         }
 
-        public void PatchUntilClose(IntPtr window)
+        public void PatchUntilClose(IntPtr optionsWindow)
         {
-            _cyclicWorker.StopAction = () => _pInvoker.GetWindow(window, GetWindowCmd.GW_OWNER) == IntPtr.Zero;
-            _cyclicWorker.Start(20, () => ExecuteAllModifiers(window));
+            _cyclicWorker.StopAction = () => _pInvoker.GetWindow(optionsWindow, GetWindowCmd.GW_OWNER) == IntPtr.Zero;
+            _cyclicWorker.Start(20, () => ExecuteAllModifiers(optionsWindow));
         }
 
-        public void ExecuteAllModifiers(IntPtr window)
+        public void ExecuteAllModifiers(IntPtr optionsWindow)
         {
-            _modifiers.ToList().ForEach(m => m.Modify(window));
+            _modifiers.ToList().ForEach(m => m.Modify(optionsWindow));
         }
     }
 }

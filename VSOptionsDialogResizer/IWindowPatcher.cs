@@ -4,6 +4,6 @@ namespace VSOptionsDialogResizer
 {
     public interface IWindowPatcher
     {
-        void PatchUntilClose(IntPtr window);
+        void PatchUntilClose(IntPtr optionsWindow);
     }
 }
