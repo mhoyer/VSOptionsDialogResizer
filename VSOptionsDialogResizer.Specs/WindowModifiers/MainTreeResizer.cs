@@ -64,27 +64,4 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _tree = new IntPtr(2);
     }
-
-    public class MainTreeResizer : IWindowModifier
-    {
-        readonly IPInvoker _pInvoker;
-
-        public MainTreeResizer(IPInvoker pInvoker)
-        {
-            _pInvoker = pInvoker;
-        }
-
-        public void Modify(IntPtr window, uint width, uint height)
-        {
-            var tree = _pInvoker.FindAllChildrenByClassName(window, "SysTreeView32").FirstOrDefault();
-            if (tree == IntPtr.Zero) return;
-
-            var treeRect = _pInvoker.GetWindowRect(tree);
-            _pInvoker.MoveWindow(tree, 
-                10, 
-                10, 
-                treeRect.Width,
-                height - 20, true);
-        }
-    }
 }

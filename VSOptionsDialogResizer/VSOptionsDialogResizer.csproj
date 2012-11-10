@@ -52,6 +52,7 @@
     <Compile Include="WindowModifiers\IWindowModifier.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WindowModifiers\MainTreeResizer.cs" />
     <Compile Include="WindowPatcher.cs" />
     <Compile Include="PInvoke\GetWindowCmd.cs" />
     <Compile Include="ICyclicWorker.cs" />
