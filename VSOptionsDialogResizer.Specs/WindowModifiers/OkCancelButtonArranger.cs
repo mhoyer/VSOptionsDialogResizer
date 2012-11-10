@@ -55,6 +55,14 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                                                                50, // = Y2-Y1
                                                                true));
 
+        It should_set_new_position_of_ok_button_but_set_new_left_offset =
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
+                                                               180, // newWidthOfOptionsDialog - widthOfOk - widthOfCancel - 20
+                                                               Param.IsAny<int>(),
+                                                               Param.IsAny<uint>(),
+                                                               Param.IsAny<uint>(),
+                                                               true));
+
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _ok = new IntPtr(2);
     }
@@ -74,7 +82,7 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             if (_pInvoker.GetWindowText(button) != "OK") return;
             var buttonRect = _pInvoker.GetWindowRect(button);
             _pInvoker.MoveWindow(button,
-                                 0,
+                                 (int) (width - buttonRect.Width - 20),
                                  0,
                                  buttonRect.Width,
                                  buttonRect.Height,
