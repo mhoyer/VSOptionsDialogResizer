@@ -5,6 +5,5 @@ namespace VSOptionsDialogResizer
     public interface ICyclicWorker
     {
         void Start(int sleep, Action action);
-        void Stop();
     }
 }
