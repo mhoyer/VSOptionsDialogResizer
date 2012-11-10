@@ -17,6 +17,3 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(true)]
 
-[assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("")]
-[assembly: AssemblyKeyName("")]

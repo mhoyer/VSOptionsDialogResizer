@@ -29,4 +29,22 @@ namespace VSOptionsDialogResizer.Tests
         static DTE2 _application;
         static AddIn _addin;
     }
+
+    public class when_initializing_the_container : WithSubject<Connect>
+    {
+        Because of = () => Subject.InitContainer();
+
+        It should_simply_pass_the_initialization = () => { };
+    }
+
+    public class when_resolving_the_options_dialog_watcher_instance : WithSubject<Connect>
+    {
+        Establish context = () => Subject.InitContainer();
+
+        Because of = () => _watcher = Subject._container.GetInstance<IOptionsDialogWatcher>();
+
+        It should_simply_instanciate_it = () => _watcher.ShouldNotBeNull();
+
+        static IOptionsDialogWatcher _watcher;
+    }
 }
