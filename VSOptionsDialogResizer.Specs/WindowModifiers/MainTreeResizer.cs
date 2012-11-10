@@ -30,7 +30,12 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             () => The<IPInvoker>().WasToldTo(p => p.GetWindowRect(_tree));
 
         It should_move_the_tree_but_keep_the_x_offset =
-            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_tree, 10, Param<int>.IsAnything, Param<uint>.IsAnything, Param<uint>.IsAnything, true));
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_tree,
+                                                               10, // = X1
+                                                               Param.IsAny<int>(),
+                                                               Param.IsAny<uint>(),
+                                                               Param.IsAny<uint>(),
+                                                               true));
 
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _tree = new IntPtr(2);
@@ -45,7 +50,7 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             _pInvoker = pInvoker;
         }
 
-        public void Modify(IntPtr window, int width, int height)
+        public void Modify(IntPtr window, uint width, uint height)
         {
             var tree = _pInvoker.FindAllChildrenByClassName(window, "SysTreeView32").FirstOrDefault();
             if (tree == IntPtr.Zero) return;

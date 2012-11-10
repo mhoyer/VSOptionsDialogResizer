@@ -4,6 +4,6 @@ namespace VSOptionsDialogResizer.WindowModifiers
 {
     public interface IWindowModifier
     {
-        void Modify(IntPtr window, int width, int height);
+        void Modify(IntPtr window, uint width, uint height);
     }
 }

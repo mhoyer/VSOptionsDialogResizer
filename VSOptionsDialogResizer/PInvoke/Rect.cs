@@ -10,7 +10,7 @@ namespace VSOptionsDialogResizer.PInvoke
         public int X2;
         public int Y2;
 
-        public int Width { get { return X2 - X1; } }
-        public int Height { get { return Y2 - Y1; } }
+        public uint Width { get { return (uint) (X2 - X1); } }
+        public uint Height { get { return (uint) (Y2 - Y1); } }
     }
 }
