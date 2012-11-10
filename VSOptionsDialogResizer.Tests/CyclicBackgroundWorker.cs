@@ -4,7 +4,7 @@ using Machine.Specifications;
 
 namespace VSOptionsDialogResizer.Tests
 {
-    public class when_starting_a_cyclic_action : WithCyclicBackgroundWorker
+    public class when_starting_a_cyclic_background_action : WithCyclicBackgroundWorker
     {
         Establish context = () => Triggered = false;
 
@@ -18,7 +18,7 @@ namespace VSOptionsDialogResizer.Tests
         It should_have_triggered_the_action_at_least_once = () => Triggered.ShouldBeTrue();
     }
 
-    public class when_running_a_cyclic_worker_for_longer : WithCyclicBackgroundWorker
+    public class when_running_a_cyclic_background_worker_for_longer : WithCyclicBackgroundWorker
     {
         Establish context = () => _counter = 0;
 
@@ -35,7 +35,7 @@ namespace VSOptionsDialogResizer.Tests
         static int _counter;
     }
 
-    public class when_running_a_cyclic_worker_again : WithCyclicBackgroundWorker
+    public class when_running_a_cyclic_background_worker_again : WithCyclicBackgroundWorker
     {
         Establish context =
             () =>
