@@ -43,7 +43,7 @@ namespace VSOptionsDialogResizer.Specs
 
         Because of = () => _watcher = Subject._container.GetInstance<IOptionsDialogWatcher>();
 
-        It should_simply_instanciate_it = () => _watcher.ShouldNotBeNull();
+        It should_simply_instantiate_it = () => _watcher.ShouldNotBeNull();
 
         static IOptionsDialogWatcher _watcher;
     }
