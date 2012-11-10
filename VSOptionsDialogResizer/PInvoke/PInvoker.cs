@@ -21,6 +21,10 @@ namespace VSOptionsDialogResizer.PInvoke
             return StaticPInvoke.SetWindowLong(hWnd, nIndex, dwNewLong);
         }
 
+        public void ResizeWindow(IntPtr hWnd, uint width, uint height)
+        {
+        }
+
         public IEnumerable<IntPtr> FindWindows(string caption)
         {
             var result = new List<IntPtr>();

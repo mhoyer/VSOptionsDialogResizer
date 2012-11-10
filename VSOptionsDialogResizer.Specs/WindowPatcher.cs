@@ -24,6 +24,9 @@ namespace VSOptionsDialogResizer.Specs
                                                                                                     WindowStyles.WS_THICKFRAME |
                                                                                                     WindowStyles.WS_POPUP)));
         
+        It should_initially_resize_the_options_window_to_800x786 =
+            () => PInvoker.WasToldTo(p => p.ResizeWindow(_window, 800, 768));
+        
         It should_start_the_cyclic_modifier_with_20ms_sleep =
             () => Worker.WasToldTo(w => w.Start(20, Param.IsAny<Action>()));
 
