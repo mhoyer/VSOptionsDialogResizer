@@ -27,7 +27,7 @@ namespace VSOptionsDialogResizer.Addin
                                 };
 
             _container = new Container();
-            _container.Register<IList<IWindowModifier>>(() => _container.GetAllInstances<IWindowModifier>().ToList());
+            _container.RegisterAll<IWindowModifier>(classes.Where(typeof(IWindowModifier).IsAssignableFrom));
             _container.RegisterWithContext(CyclicWorkerContexts);
             registrations.ToList().ForEach(r => _container.Register(r.Interface, r.Implementation));
         }

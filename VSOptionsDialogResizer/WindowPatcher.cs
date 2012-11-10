@@ -9,10 +9,10 @@ namespace VSOptionsDialogResizer
     public class WindowPatcher : IWindowPatcher
     {
         readonly ICyclicWorker _cyclicWorker;
-        readonly IList<IWindowModifier> _modifiers;
+        readonly IEnumerable<IWindowModifier> _modifiers;
         readonly IPInvoker _pInvoker;
 
-        public WindowPatcher(ICyclicWorker cyclicWorker, IList<IWindowModifier> modifiers, IPInvoker pInvoker)
+        public WindowPatcher(ICyclicWorker cyclicWorker, IEnumerable<IWindowModifier> modifiers, IPInvoker pInvoker)
         {
             _cyclicWorker = cyclicWorker;
             _modifiers = modifiers;
