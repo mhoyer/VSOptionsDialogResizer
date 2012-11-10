@@ -42,7 +42,7 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         It should_set_new_position_of_cancel_button_but_set_new_top_offset =
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_cancel,
                                                                Param.IsAny<int>(),
-                                                               140, // newHeightOfOptionsDialog - heightOfOk - 10
+                                                               140, // newHeightOfOptionsDialog - heightOfCancel - 10
                                                                Param.IsAny<uint>(),
                                                                Param.IsAny<uint>(),
                                                                true));
@@ -80,7 +80,7 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
 
         It should_set_new_position_of_ok_button_but_set_new_left_offset =
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
-                                                               180, // newWidthOfOptionsDialog - widthOfOk - 10 - widthOfCancel - 10
+                                                               -20, // newWidthOfOptionsDialog - widthOfOk - 10 - widthOfCancel - 10
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<uint>(),
                                                                Param.IsAny<uint>(),
@@ -151,14 +151,15 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             var cancelButton = buttons.FirstOrDefault(b => _pInvoker.GetWindowText(b) == "Cancel");
 
             var okButtonRect = _pInvoker.GetWindowRect(okButton);
+            var cancelButtonRect = _pInvoker.GetWindowRect(cancelButton);
+
             _pInvoker.MoveWindow(okButton,
-                                 (int) (width - okButtonRect.Width - 20),
+                                 (int) (width - okButtonRect.Width - cancelButtonRect.Width - 20),
                                  (int) (height - 10 - okButtonRect.Height),
                                  okButtonRect.Width,
                                  okButtonRect.Height,
                                  true);
 
-            var cancelButtonRect = _pInvoker.GetWindowRect(cancelButton);
             _pInvoker.MoveWindow(cancelButton,
                                  (int) (width - cancelButtonRect.Width - 10),
                                  (int) (height - 10 - cancelButtonRect.Height),
