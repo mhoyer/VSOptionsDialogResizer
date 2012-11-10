@@ -45,6 +45,9 @@
     <Compile Include="CyclicWorker.cs" />
     <Compile Include="CyclicBackgroundWorker.cs" />
     <Compile Include="PInvoke\GetWindowLong.cs" />
+    <Compile Include="PInvoke\WindowStyles.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WindowModifiers\IWindowModifier.cs">
       <SubType>Code</SubType>
     </Compile>
