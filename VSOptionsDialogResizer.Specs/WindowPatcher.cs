@@ -40,6 +40,9 @@ namespace VSOptionsDialogResizer.Specs
 
         It should_execute_each_modifier =
             () => Modifiers.ToList().ForEach(m => m.WasToldTo(mod => mod.Modify(_window)));
+
+        It should_determine_the_current_client_size =
+            () => PInvoker.WasToldTo(p => p.GetClientRect(_window));
     }
 
     public class WithWindowPatcher : WithFakes

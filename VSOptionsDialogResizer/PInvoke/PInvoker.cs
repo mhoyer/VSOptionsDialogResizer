@@ -28,6 +28,14 @@ namespace VSOptionsDialogResizer.PInvoke
             StaticPInvoke.MoveWindow(hWnd, rect.X1, rect.Y1, width, height, true);
         }
 
+        public Rect GetClientRect(IntPtr hWnd)
+        {
+            Rect clientRect;
+            StaticPInvoke.GetClientRect(hWnd, out clientRect);
+
+            return clientRect;
+        }
+
         public IEnumerable<IntPtr> FindWindows(string caption)
         {
             var result = new List<IntPtr>();

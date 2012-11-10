@@ -10,5 +10,6 @@ namespace VSOptionsDialogResizer.PInvoke
         uint GetWindowLong(IntPtr hWnd, GetWindowLong nIndex);
         uint SetWindowLong(IntPtr hWnd, GetWindowLong nIndex, uint dwNewLong);
         void ResizeWindow(IntPtr hWnd, uint width, uint height);
+        Rect GetClientRect(IntPtr hWnd);
     }
 }

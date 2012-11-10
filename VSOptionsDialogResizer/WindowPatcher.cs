@@ -30,6 +30,8 @@ namespace VSOptionsDialogResizer
 
         public void ExecuteAllModifiers(IntPtr optionsWindow)
         {
+            var clientRect = _pInvoker.GetClientRect(optionsWindow);
+
             _modifiers.ToList().ForEach(m => m.Modify(optionsWindow));
         }
 

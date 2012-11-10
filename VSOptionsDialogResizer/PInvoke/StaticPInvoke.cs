@@ -13,7 +13,10 @@ namespace VSOptionsDialogResizer.PInvoke
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowCmd uCmd);
-        
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
