@@ -74,29 +74,8 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         static readonly IntPtr _cancel = new IntPtr(3);
     }
 
-    public class when_arranging_the_ok_button_of_the_options_dialog : WithSubject<OkCancelButtonArranger>
+    public class when_arranging_the_ok_button_of_the_options_dialog : WithOkCancelButtonArranger
     {
-        Establish context = () =>
-            {
-                The<IPInvoker>()
-                    .WhenToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "Button"))
-                    .Return(new[] { _ok });
-
-                The<IPInvoker>()
-                    .WhenToldTo(p => p.GetWindowText(_ok))
-                    .Return("OK");
-
-                The<IPInvoker>()
-                    .WhenToldTo(p => p.GetWindowRect(_ok))
-                    .Return(new Rect
-                        {
-                            X1 = 1000, Y1 = 1000,
-                            X2 = 1200, Y2 = 1050
-                        });
-            };
-
-        Because of = () => Subject.Modify(_optionsWindow, 400, 200);
-
         It should_determine_all_buttons =
             () => The<IPInvoker>().WasToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "Button"));
 
@@ -137,9 +116,36 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                                                                Param.IsAny<uint>(),
                                                                Param.IsAny<uint>(),
                                                                true));
+    }
 
-        static readonly IntPtr _optionsWindow = new IntPtr(1);
-        static readonly IntPtr _ok = new IntPtr(2);
+    public class WithOkCancelButtonArranger : WithSubject<OkCancelButtonArranger>
+    {
+        Establish context = () =>
+        {
+            The<IPInvoker>()
+                .WhenToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "Button"))
+                .Return(new[] { _ok });
+
+            The<IPInvoker>()
+                .WhenToldTo(p => p.GetWindowText(_ok))
+                .Return("OK");
+
+            The<IPInvoker>()
+                .WhenToldTo(p => p.GetWindowRect(_ok))
+                .Return(new Rect
+                {
+                    X1 = 1000,
+                    Y1 = 1000,
+                    X2 = 1200,
+                    Y2 = 1050
+                });
+        };
+
+        Because of = () => Subject.Modify(_optionsWindow, 400, 200);
+
+        protected static readonly IntPtr _optionsWindow = new IntPtr(1);
+        protected static readonly IntPtr _ok = new IntPtr(2);
+        protected static readonly IntPtr _cancel = new IntPtr(3);
     }
 
     public class OkCancelButtonArranger : IWindowModifier
