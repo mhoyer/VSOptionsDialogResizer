@@ -8,12 +8,15 @@ namespace VSOptionsDialogResizer
     {
         readonly BackgroundWorker _worker;
 
+        public Func<bool> StopAction { get; set; }
+
         public CyclicBackgroundWorker()
         {
             _worker = new BackgroundWorker();
-
             _worker.DoWork += DoTheJob;
             _worker.WorkerSupportsCancellation = true;
+
+            StopAction = () => false; // abort loop after one pass
         }
 
         public void Start(int sleep, Action action)
@@ -32,7 +35,8 @@ namespace VSOptionsDialogResizer
             {
                 action.Invoke();
 
-                if (backgroundWorker.CancellationPending)
+                if (backgroundWorker.CancellationPending ||
+                    StopAction.Invoke())
                 {
                     e.Cancel = true;
                     break;

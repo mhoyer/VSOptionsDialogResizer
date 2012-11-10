@@ -9,6 +9,17 @@ namespace VSOptionsDialogResizer.Tests
 
         It should_have_triggered_the_action_at_least_once = () => Triggered.ShouldBeTrue();
     }
+
+    public class when_starting_a_cyclic_action_with_custom_stop_condition : WithCyclicWorker
+    {
+        Establish context = () => Subject.StopAction = () => _twice == 2;
+
+        Because of = () => Subject.Start(SLEEP, () => _twice++);
+
+        It should_have_triggered_the_action_at_least_once = () => _twice.ShouldEqual(2);
+
+        static int _twice = 0;
+    }
     
     public class when_running_a_cyclic_worker_again : WithCyclicWorker
     {
