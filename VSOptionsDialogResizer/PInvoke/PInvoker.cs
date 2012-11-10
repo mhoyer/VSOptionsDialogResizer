@@ -36,6 +36,11 @@ namespace VSOptionsDialogResizer.PInvoke
             return clientRect;
         }
 
+        public IEnumerable<IntPtr> FindAllChildrenByClassName(IntPtr hWnd, string className)
+        {
+            return null;
+        }
+
         public IEnumerable<IntPtr> FindWindows(string caption)
         {
             var result = new List<IntPtr>();

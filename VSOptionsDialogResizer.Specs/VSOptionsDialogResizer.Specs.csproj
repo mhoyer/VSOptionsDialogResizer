@@ -79,6 +79,7 @@
     <Compile Include="CyclicWorker.cs" />
     <Compile Include="CyclicBackgroundWorker.cs" />
     <Compile Include="OptionsDialogFinder.cs" />
+    <Compile Include="WindowModifiers\MainTreeResizer.cs" />
     <Compile Include="WindowPatcher.cs" />
     <Compile Include="OptionsDialogWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
