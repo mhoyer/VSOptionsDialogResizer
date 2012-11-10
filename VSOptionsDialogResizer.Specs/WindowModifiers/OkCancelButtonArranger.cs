@@ -14,12 +14,19 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                 The<IPInvoker>()
                     .WhenToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "Button"))
                     .Return(new[] { _cancel });
+                
+                The<IPInvoker>()
+                    .WhenToldTo(p => p.GetWindowText(_cancel))
+                    .Return("Cancel");
             };
 
         Because of = () => Subject.Modify(_optionsWindow, 400, 200);
 
         It should_determine_cancel_button =
             () => The<IPInvoker>().WasToldTo(p => p.GetWindowText(_cancel));
+
+        It should_determine_current_position_of_cancel_button =
+            () => The<IPInvoker>().WasToldTo(p => p.GetWindowRect(_cancel));
 
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _cancel = new IntPtr(3);
@@ -105,7 +112,8 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         public void Modify(IntPtr window, uint width, uint height)
         {
             var button = _pInvoker.FindAllChildrenByClassName(window, "Button").First();
-            if (_pInvoker.GetWindowText(button) != "OK") return;
+            if (_pInvoker.GetWindowText(button) != "OK" &&
+                _pInvoker.GetWindowText(button) != "Cancel") return;
             var buttonRect = _pInvoker.GetWindowRect(button);
             _pInvoker.MoveWindow(button,
                                  (int) (width - buttonRect.Width - 20),
