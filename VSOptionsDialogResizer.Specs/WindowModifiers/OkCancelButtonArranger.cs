@@ -18,6 +18,16 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                 The<IPInvoker>()
                     .WhenToldTo(p => p.GetWindowText(_cancel))
                     .Return("Cancel");
+
+                The<IPInvoker>()
+                    .WhenToldTo(p => p.GetWindowRect(_cancel))
+                    .Return(new Rect
+                    {
+                        X1 = 1200,
+                        Y1 = 1000,
+                        X2 = 1400,
+                        Y2 = 1050
+                    });
             };
 
         Because of = () => Subject.Modify(_optionsWindow, 400, 200);
@@ -27,6 +37,14 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
 
         It should_determine_current_position_of_cancel_button =
             () => The<IPInvoker>().WasToldTo(p => p.GetWindowRect(_cancel));
+
+        It should_set_new_position_of_cancel_button_but_keep_the_width =
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_cancel,
+                                                               Param.IsAny<int>(),
+                                                               Param.IsAny<int>(),
+                                                               200, // = X2-X1
+                                                               Param.IsAny<uint>(),
+                                                               true));
 
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _cancel = new IntPtr(3);
