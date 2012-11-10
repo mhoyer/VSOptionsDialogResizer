@@ -49,6 +49,7 @@
     <Compile Include="PInvoke\WindowStyles.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WindowModifiers\OkCancelButtonArranger.cs" />
     <Compile Include="WindowModifiers\IWindowModifier.cs">
       <SubType>Code</SubType>
     </Compile>

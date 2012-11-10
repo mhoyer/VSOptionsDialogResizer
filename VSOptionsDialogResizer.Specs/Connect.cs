@@ -37,10 +37,15 @@ namespace VSOptionsDialogResizer.Specs
         
         It should_simply_pass_the_initialization = () => { };
 
-        It should_register_the_main_tree_resizer_to_list_of_modifiers =
+        It should_register_the_main_tree_resizer_to_the_list_of_modifiers =
             () => Subject._container
                       .GetAllInstances<IWindowModifier>()
                       .ShouldContain(m => m.GetType() == typeof(MainTreeResizer));
+
+        It should_register_the_ok_cancel_button_arranger_to_the_list_of_modifiers =
+            () => Subject._container
+                      .GetAllInstances<IWindowModifier>()
+                      .ShouldContain(m => m.GetType() == typeof(OkCancelButtonArranger));
     }
 
     public class when_resolving_the_options_dialog_watcher_instance : WithSubject<Connect>
