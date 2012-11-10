@@ -7,31 +7,8 @@ using VSOptionsDialogResizer.WindowModifiers;
 
 namespace VSOptionsDialogResizer.Specs.WindowModifiers
 {
-    public class when_arranging_the_cancel_button_of_the_options_dialog : WithSubject<OkCancelButtonArranger>
+    public class when_arranging_the_cancel_button_of_the_options_dialog : WithOkCancelButtonArranger
     {
-        Establish context = () =>
-            {
-                The<IPInvoker>()
-                    .WhenToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "Button"))
-                    .Return(new[] { _cancel });
-                
-                The<IPInvoker>()
-                    .WhenToldTo(p => p.GetWindowText(_cancel))
-                    .Return("Cancel");
-
-                The<IPInvoker>()
-                    .WhenToldTo(p => p.GetWindowRect(_cancel))
-                    .Return(new Rect
-                    {
-                        X1 = 1200,
-                        Y1 = 1000,
-                        X2 = 1400,
-                        Y2 = 1050
-                    });
-            };
-
-        Because of = () => Subject.Modify(_optionsWindow, 400, 200);
-
         It should_determine_cancel_button =
             () => The<IPInvoker>().WasToldTo(p => p.GetWindowText(_cancel));
 
@@ -124,20 +101,30 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         {
             The<IPInvoker>()
                 .WhenToldTo(p => p.FindAllChildrenByClassName(_optionsWindow, "Button"))
-                .Return(new[] { _ok });
+                .Return(new[] { _ok, _cancel });
 
             The<IPInvoker>()
                 .WhenToldTo(p => p.GetWindowText(_ok))
                 .Return("OK");
 
             The<IPInvoker>()
+                .WhenToldTo(p => p.GetWindowText(_cancel))
+                .Return("Cancel");
+
+            The<IPInvoker>()
                 .WhenToldTo(p => p.GetWindowRect(_ok))
                 .Return(new Rect
                 {
-                    X1 = 1000,
-                    Y1 = 1000,
-                    X2 = 1200,
-                    Y2 = 1050
+                    X1 = 1000, Y1 = 1000,
+                    X2 = 1200, Y2 = 1050
+                });
+
+            The<IPInvoker>()
+                .WhenToldTo(p => p.GetWindowRect(_cancel))
+                .Return(new Rect
+                {
+                    X1 = 1200, Y1 = 1000,
+                    X2 = 1400, Y2 = 1050
                 });
         };
 
