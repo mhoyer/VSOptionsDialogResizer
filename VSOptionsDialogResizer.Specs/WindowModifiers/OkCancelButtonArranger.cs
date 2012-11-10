@@ -19,7 +19,7 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_cancel,
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<int>(),
-                                                               200, // = X2-X1
+                                                               100, // = X2-X1
                                                                Param.IsAny<uint>(),
                                                                true));
 
@@ -28,12 +28,13 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<uint>(),
-                                                               50, // = Y2-Y1
+                                                               30, // = Y2-Y1
                                                                true));
 
         It should_set_new_position_of_cancel_button_but_set_new_left_offset =
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_cancel,
-                                                               190, // newWidthOfOptionsDialog - widthOfCancel - 10
+                                                               // newWidthOfOptionsDialog - widthOfCancel - 10
+                                                               500 - 100 - 10, 
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<uint>(),
                                                                Param.IsAny<uint>(),
@@ -42,7 +43,8 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         It should_set_new_position_of_cancel_button_but_set_new_top_offset =
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_cancel,
                                                                Param.IsAny<int>(),
-                                                               140, // newHeightOfOptionsDialog - heightOfCancel - 10
+                                                               // newHeightOfOptionsDialog - heightOfCancel - 10
+                                                               500 - 30 - 10,
                                                                Param.IsAny<uint>(),
                                                                Param.IsAny<uint>(),
                                                                true));
@@ -66,7 +68,7 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<int>(),
-                                                               200, // = X2-X1
+                                                               100, // = X2-X1
                                                                Param.IsAny<uint>(),
                                                                true));
 
@@ -75,12 +77,13 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<uint>(),
-                                                               50, // = Y2-Y1
+                                                               30, // = Y2-Y1
                                                                true));
 
         It should_set_new_position_of_ok_button_but_set_new_left_offset =
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
-                                                               -20, // newWidthOfOptionsDialog - widthOfOk - 10 - widthOfCancel - 10
+                                                               // newWidthOfOptionsDialog - widthOfOk - 10 - widthOfCancel - 10
+                                                               500 - 100 - 10 - 100 - 10,
                                                                Param.IsAny<int>(),
                                                                Param.IsAny<uint>(),
                                                                Param.IsAny<uint>(),
@@ -89,7 +92,8 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
         It should_set_new_position_of_ok_button_but_set_new_top_offset =
             () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_ok,
                                                                Param.IsAny<int>(),
-                                                               140, // newHeightOfOptionsDialog - heightOfOk - 10
+                                                               // newHeightOfOptionsDialog - heightOfOk - 10
+                                                               500 - 30 - 10,
                                                                Param.IsAny<uint>(),
                                                                Param.IsAny<uint>(),
                                                                true));
@@ -113,26 +117,26 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
 
             The<IPInvoker>()
                 .WhenToldTo(p => p.GetWindowRect(_ok))
-                .Return(new Rect
-                {
-                    X1 = 1000, Y1 = 1000,
-                    X2 = 1200, Y2 = 1050
-                });
+                .Return(_fakeButtonRect_100x30);
 
             The<IPInvoker>()
                 .WhenToldTo(p => p.GetWindowRect(_cancel))
-                .Return(new Rect
-                {
-                    X1 = 1200, Y1 = 1000,
-                    X2 = 1400, Y2 = 1050
-                });
+                .Return(_fakeButtonRect_100x30);
         };
 
-        Because of = () => Subject.Modify(_optionsWindow, 400, 200);
+        Because of = () => Subject.Modify(_optionsWindow, 500, 500);
 
         protected static readonly IntPtr _optionsWindow = new IntPtr(1);
         protected static readonly IntPtr _ok = new IntPtr(2);
         protected static readonly IntPtr _cancel = new IntPtr(3);
+
+        static Rect _fakeButtonRect_100x30 = new Rect
+            {
+                X1 = 0,
+                Y1 = 0,
+                X2 = 100,
+                Y2 = 30
+            };
     }
 
     public class OkCancelButtonArranger : IWindowModifier
