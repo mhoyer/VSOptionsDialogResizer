@@ -19,21 +19,20 @@ namespace VSOptionsDialogResizer.WindowModifiers
             var okButton = buttons.FirstOrDefault(b => _pInvoker.GetWindowText(b) == "OK");
             var cancelButton = buttons.FirstOrDefault(b => _pInvoker.GetWindowText(b) == "Cancel");
 
-            var okButtonRect = _pInvoker.GetWindowRect(okButton);
             var cancelButtonRect = _pInvoker.GetWindowRect(cancelButton);
-
-            _pInvoker.MoveWindow(okButton,
-                                 (int)(width - okButtonRect.Width - cancelButtonRect.Width - 20),
-                                 (int)(height - 10 - okButtonRect.Height),
-                                 okButtonRect.Width,
-                                 okButtonRect.Height,
-                                 true);
-
             _pInvoker.MoveWindow(cancelButton,
                                  (int)(width - cancelButtonRect.Width - 10),
                                  (int)(height - 10 - cancelButtonRect.Height),
                                  cancelButtonRect.Width,
                                  cancelButtonRect.Height,
+                                 true);
+
+            var okButtonRect = _pInvoker.GetWindowRect(okButton);
+            _pInvoker.MoveWindow(okButton,
+                                 (int)(width - okButtonRect.Width - cancelButtonRect.Width - 20),
+                                 (int)(height - 10 - okButtonRect.Height),
+                                 okButtonRect.Width,
+                                 okButtonRect.Height,
                                  true);
         }
     }
