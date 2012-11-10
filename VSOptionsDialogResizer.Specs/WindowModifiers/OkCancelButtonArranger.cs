@@ -62,6 +62,14 @@ namespace VSOptionsDialogResizer.Specs.WindowModifiers
                                                                Param.IsAny<uint>(),
                                                                true));
 
+        It should_set_new_position_of_cancel_button_but_set_new_top_offset =
+            () => The<IPInvoker>().WasToldTo(p => p.MoveWindow(_cancel,
+                                                               Param.IsAny<int>(),
+                                                               140, // newHeightOfOptionsDialog - heightOfOk - 10
+                                                               Param.IsAny<uint>(),
+                                                               Param.IsAny<uint>(),
+                                                               true));
+
         static readonly IntPtr _optionsWindow = new IntPtr(1);
         static readonly IntPtr _cancel = new IntPtr(3);
     }
