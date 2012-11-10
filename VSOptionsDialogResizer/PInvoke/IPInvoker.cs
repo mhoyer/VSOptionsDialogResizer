@@ -5,7 +5,7 @@ namespace VSOptionsDialogResizer.PInvoke
 {
     public interface IPInvoker
     {
-        IEnumerable<IntPtr> FindWindows(string caption);
+        IEnumerable<IntPtr> FindAllWindowsByCaption(string caption);
         IntPtr GetWindow(IntPtr hWnd, GetWindowCmd uCmd);
         uint GetWindowLong(IntPtr hWnd, GetWindowLong nIndex);
         uint SetWindowLong(IntPtr hWnd, GetWindowLong nIndex, uint dwNewLong);

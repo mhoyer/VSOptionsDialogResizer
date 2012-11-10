@@ -10,7 +10,7 @@ namespace VSOptionsDialogResizer.Specs
         Establish context = () =>
         {
             The<IPInvoker>()
-                .WhenToldTo(p => p.FindWindows("Options"))
+                .WhenToldTo(p => p.FindAllWindowsByCaption("Options"))
                 .Return(new[] { _optionsWindow, _otherOptionsWindow });
             
             The<IPInvoker>()
@@ -21,7 +21,7 @@ namespace VSOptionsDialogResizer.Specs
         Because of = () => _result = Subject.Find(_devenvMainWindow);
 
         It should_search_for_windows_with_Options_caption = 
-            () => The<IPInvoker>().WasToldTo(p => p.FindWindows("Options"));
+            () => The<IPInvoker>().WasToldTo(p => p.FindAllWindowsByCaption("Options"));
 
         It should_return_found_Options_window = () => _result.ShouldEqual(_optionsWindow);
 

@@ -15,7 +15,7 @@ namespace VSOptionsDialogResizer
 
         public IntPtr Find(IntPtr devenvMainWindow)
         {
-            var optionsWindows = _pinvoker.FindWindows("Options");
+            var optionsWindows = _pinvoker.FindAllWindowsByCaption("Options");
             return optionsWindows.FirstOrDefault(o => _pinvoker.GetWindow(o, GetWindowCmd.GW_OWNER) == devenvMainWindow);
         }
     }

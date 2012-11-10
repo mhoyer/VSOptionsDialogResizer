@@ -41,7 +41,7 @@ namespace VSOptionsDialogResizer.PInvoke
             return null;
         }
 
-        public IEnumerable<IntPtr> FindWindows(string caption)
+        public IEnumerable<IntPtr> FindAllWindowsByCaption(string caption)
         {
             var result = new List<IntPtr>();
             EnumWindows(w =>
