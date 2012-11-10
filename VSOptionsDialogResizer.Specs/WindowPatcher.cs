@@ -19,7 +19,10 @@ namespace VSOptionsDialogResizer.Specs
             () => PInvoker.WasToldTo(p => p.GetWindow(_window, GetWindowCmd.GW_OWNER));
 
         It should_make_the_options_window_resizable =
-            () => PInvoker.WasToldTo(p => p.SetWindowLong(_window, GetWindowLong.GWL_STYLE, 0));
+            () => PInvoker.WasToldTo(p => p.SetWindowLong(_window, GetWindowLong.GWL_STYLE, (uint) (WindowStyles.WS_CAPTION |
+                                                                                                    WindowStyles.WS_VISIBLE |
+                                                                                                    WindowStyles.WS_THICKFRAME |
+                                                                                                    WindowStyles.WS_POPUP)));
         
         It should_start_the_cyclic_modifier_with_20ms_sleep =
             () => Worker.WasToldTo(w => w.Start(20, Param.IsAny<Action>()));
