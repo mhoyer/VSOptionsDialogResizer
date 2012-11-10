@@ -12,5 +12,6 @@ namespace VSOptionsDialogResizer.PInvoke
         void ResizeWindow(IntPtr hWnd, uint width, uint height);
         Rect GetClientRect(IntPtr hWnd);
         IEnumerable<IntPtr> FindAllChildrenByClassName(IntPtr hWnd, string className);
+        string GetClassName(IntPtr hWnd);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace VSOptionsDialogResizer.PInvoke
@@ -36,9 +37,20 @@ namespace VSOptionsDialogResizer.PInvoke
             return clientRect;
         }
 
+        public string GetClassName(IntPtr wnd)
+        {
+            var className = new StringBuilder(100);
+            StaticPInvoke.GetClassName(wnd, className, className.Capacity);
+
+            return className.ToString();
+        }
+
         public IEnumerable<IntPtr> FindAllChildrenByClassName(IntPtr hWnd, string className)
         {
-            return null;
+            var result = new List<IntPtr>();
+            EnumChildren(hWnd, result.Add);
+
+            return result.Where(c => GetClassName(c) == className);
         }
 
         public IEnumerable<IntPtr> FindAllWindowsByCaption(string caption)
@@ -55,6 +67,15 @@ namespace VSOptionsDialogResizer.PInvoke
         void EnumWindows(Action<IntPtr> block)
         {
             StaticPInvoke.EnumWindows((w, p) =>
+            {
+                block.Invoke(w);
+                return true;
+            }, IntPtr.Zero);
+        }
+
+        void EnumChildren(IntPtr parent, Action<IntPtr> block)
+        {
+            StaticPInvoke.EnumChildWindows(parent, (w, p) =>
             {
                 block.Invoke(w);
                 return true;
