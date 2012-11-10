@@ -31,7 +31,7 @@ namespace VSOptionsDialogResizer.Specs
             () => Worker.WasToldTo(w => w.Start(20, Param.IsAny<Action>()));
 
         It should_execute_each_modifier =
-            () => Modifiers.ToList().ForEach(m => m.WasToldTo(mod => mod.Modify(_window)));
+            () => Modifiers.ToList().ForEach(m => m.WasToldTo(mod => mod.Modify(_window, Param<int>.IsAnything, Param<int>.IsAnything)));
     }
 
     public class when_executing_all_modifiers : WithWindowPatcher
@@ -39,7 +39,7 @@ namespace VSOptionsDialogResizer.Specs
         Because of = () => Subject.ExecuteAllModifiers(_window);
 
         It should_execute_each_modifier =
-            () => Modifiers.ToList().ForEach(m => m.WasToldTo(mod => mod.Modify(_window)));
+            () => Modifiers.ToList().ForEach(m => m.WasToldTo(mod => mod.Modify(_window, Param<int>.IsAnything, Param<int>.IsAnything)));
 
         It should_determine_the_current_client_size =
             () => PInvoker.WasToldTo(p => p.GetClientRect(_window));
