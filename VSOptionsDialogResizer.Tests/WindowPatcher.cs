@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Machine.Fakes;
 using Machine.Specifications;
+using VSOptionsDialogResizer.PInvoke;
 
 namespace VSOptionsDialogResizer.Tests
 {
@@ -12,6 +13,9 @@ namespace VSOptionsDialogResizer.Tests
 
         It should_set_an_explicit_stop_condition =
             () => Worker.StopAction.ShouldNotBeNull();
+
+        It should_set_the_stop_condition_to_check_for_existence_of_options_window =
+            () => PInvoker.WasToldTo(p => p.GetWindow(_window, GetWindowCmd.GW_OWNER));
         
         It should_start_the_cyclic_modifier_with_20ms_sleep =
             () => Worker.WasToldTo(w => w.Start(20, Param.IsAny<Action>()));
@@ -35,13 +39,18 @@ namespace VSOptionsDialogResizer.Tests
                 Worker = An<ICyclicWorker>();
                 Worker
                     .WhenToldTo(c => c.Start(Param<int>.IsAnything, Param<Action>.IsAnything))
-                    .Callback<int, Action>((s, a) => a.Invoke());
+                    .Callback<int, Action>((s, a) => { 
+                        a.Invoke();
+                        Worker.StopAction.Invoke();
+                    });
 
                 Modifiers = Some<IWindowModifier>();
-                Subject = new WindowPatcher(Worker, Modifiers);
+                PInvoker = An<IPInvoker>();
+                Subject = new WindowPatcher(Worker, Modifiers, PInvoker);
             };
 
         protected static IList<IWindowModifier> Modifiers;
+        protected static IPInvoker PInvoker;
         protected static WindowPatcher Subject;
         protected static ICyclicWorker Worker;
         protected static readonly IntPtr _window = new IntPtr(2);
