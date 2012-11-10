@@ -5,11 +5,11 @@ namespace VSOptionsDialogResizer
 {
     public class CyclicWorker : ICyclicWorker
     {
-        readonly Func<bool> _stopAction;
+        public Func<bool> StopAction { get; set; }
 
-        public CyclicWorker(Func<bool> stopAction)
+        public CyclicWorker()
         {
-            _stopAction = stopAction;
+            StopAction = () => true; // abort loop after one pass
         }
 
         public void Start(int sleep, Action action)
@@ -17,7 +17,7 @@ namespace VSOptionsDialogResizer
             while (true)
             {
                 action.Invoke();
-                if (_stopAction.Invoke()) break;
+                if (StopAction.Invoke()) break;
                 Thread.Sleep(sleep);
             }
         }

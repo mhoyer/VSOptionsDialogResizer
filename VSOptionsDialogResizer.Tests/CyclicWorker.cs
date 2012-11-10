@@ -21,7 +21,7 @@ namespace VSOptionsDialogResizer.Tests
 
     public class WithCyclicWorker : WithFakes
     {
-        Establish context = () => Subject = new CyclicWorker(stopAction: () => true);
+        Establish context = () => Subject = new CyclicWorker();
 
         protected static bool Triggered;
         protected static CyclicWorker Subject;
