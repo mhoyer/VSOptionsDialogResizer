@@ -16,5 +16,11 @@ namespace VSOptionsDialogResizer.PInvoke
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowLong(IntPtr hWnd, GetWindowLong nIndex);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint SetWindowLong(IntPtr hWnd, GetWindowLong nIndex, uint dwNewLong);
     }
 }

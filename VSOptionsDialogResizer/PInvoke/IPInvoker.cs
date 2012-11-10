@@ -7,5 +7,7 @@ namespace VSOptionsDialogResizer.PInvoke
     {
         IEnumerable<IntPtr> FindWindows(string caption);
         IntPtr GetWindow(IntPtr hWnd, GetWindowCmd uCmd);
+        uint GetWindowLong(IntPtr hWnd, GetWindowLong nIndex);
+        uint SetWindowLong(IntPtr hWnd, GetWindowLong nIndex, uint dwNewLong);
     }
 }

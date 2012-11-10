@@ -11,6 +11,16 @@ namespace VSOptionsDialogResizer.PInvoke
             return StaticPInvoke.GetWindow(hWnd, uCmd);
         }
 
+        public uint GetWindowLong(IntPtr hWnd, GetWindowLong nIndex)
+        {
+            return StaticPInvoke.GetWindowLong(hWnd, nIndex);
+        }
+
+        public uint SetWindowLong(IntPtr hWnd, GetWindowLong nIndex, uint dwNewLong)
+        {
+            return StaticPInvoke.SetWindowLong(hWnd, nIndex, dwNewLong);
+        }
+
         public IEnumerable<IntPtr> FindWindows(string caption)
         {
             var result = new List<IntPtr>();
