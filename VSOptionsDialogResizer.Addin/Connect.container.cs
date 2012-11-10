@@ -33,7 +33,7 @@ namespace VSOptionsDialogResizer.Addin
 
         ICyclicWorker CyclicWorkerContexts(DependencyContext context)
         {
-            if (context.ImplementationType.IsAssignableFrom(typeof(IOptionsDialogWatcher)))
+            if (typeof(IOptionsDialogWatcher).IsAssignableFrom(context.ImplementationType))
                 return _container.GetInstance<CyclicBackgroundWorker>();
 
             return _container.GetInstance<CyclicWorker>();
