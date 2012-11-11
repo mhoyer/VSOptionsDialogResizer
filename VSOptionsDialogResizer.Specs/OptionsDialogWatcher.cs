@@ -4,6 +4,20 @@ using Machine.Specifications;
 
 namespace VSOptionsDialogResizer.Specs
 {
+    public class when_creating_the_options_dialog_watcher : WithSubject<OptionsDialogWatcher>
+    {
+        It should_set_correct_stop_action =
+            () => The<ICyclicWorker>().StopAction.Invoke().ShouldBeFalse();
+    }
+
+    public class when_stopped_listening_for_options_dialog_to_open : WithSubject<OptionsDialogWatcher>
+    {
+        Because of = () => Subject.StopListen();
+
+        It should_set_correct_stop_action =
+            () => The<ICyclicWorker>().StopAction.Invoke().ShouldBeTrue();
+    }
+
     public class when_listening_for_options_dialog_to_open : WithOptionsDialogWatcher
     {
         Establish context = () =>
