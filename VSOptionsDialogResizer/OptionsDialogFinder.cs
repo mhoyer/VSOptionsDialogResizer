@@ -15,8 +15,13 @@ namespace VSOptionsDialogResizer
 
         public IntPtr Find(IntPtr devenvMainWindow)
         {
-            var optionsWindows = _pinvoker.FindAllWindowsByCaption("Options");
-            return optionsWindows.FirstOrDefault(o => _pinvoker.GetWindow(o, GetWindowCmd.GW_OWNER) == devenvMainWindow);
+            var optionsWindow = _pinvoker
+                .FindAllWindowsByCaption("Options")
+                .FirstOrDefault(o => _pinvoker.GetWindow(o, GetWindowCmd.GW_OWNER) == devenvMainWindow);
+
+            if (_pinvoker.GetClassName(optionsWindow) == "#32770") return optionsWindow;
+            
+            return IntPtr.Zero;
         }
     }
 }
