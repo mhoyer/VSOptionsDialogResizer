@@ -23,7 +23,7 @@ namespace VSOptionsDialogResizer
         {
             _cyclicWorker.StopAction = () => _pInvoker.GetWindow(optionsWindow, GetWindowCmd.GW_OWNER) == IntPtr.Zero;
             MakeWindowResizable(optionsWindow);
-            _pInvoker.ResizeWindow(optionsWindow, 800, 768);
+            _pInvoker.ResizeWindow(optionsWindow, 800, 600);
 
             _cyclicWorker.Start(20, () => ExecuteAllModifiers(optionsWindow));
         }
