@@ -11,7 +11,7 @@ namespace VSOptionsDialogResizer.Specs
         Because of = () =>
             {
                 Subject.Start(SLEEP, () => Triggered = true);
-                Thread.Sleep(SLEEP+1); // wait longer than cycle sleep
+                Thread.Sleep(2*SLEEP); // wait longer than cycle sleep
                 Subject.Stop();
             };
 
