@@ -31,6 +31,16 @@ namespace VSOptionsDialogResizer.Specs
         static AddIn _addin;
     }
 
+    public class when_addin_was_disconnected : WithSubject<Connect>
+    {
+        Because of = () => Subject.OnDisconnection(Param.IsAny<ext_DisconnectMode>(), ref _customArray);
+        
+        It should_start_watching_for_options_dialog_to_open =
+            () => The<IOptionsDialogWatcher>().WasToldTo(w => w.StopListen());
+
+        static Array _customArray;
+    }
+
     public class when_initializing_the_container : WithSubject<Connect>
     {
         Because of = () => Subject.InitContainer();

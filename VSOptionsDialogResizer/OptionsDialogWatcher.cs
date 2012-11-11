@@ -23,6 +23,10 @@ namespace VSOptionsDialogResizer
             _cyclicBackgroundWorker.Start(200, () => FindOptionsDialog(mainWindow));
         }
 
+        public void StopListen()
+        {
+        }
+
         public void FindOptionsDialog(IntPtr mainWindow)
         {
             var optionsDialogWindow = _optionsDialogFinder.Find(mainWindow);

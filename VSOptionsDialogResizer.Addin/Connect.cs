@@ -62,6 +62,7 @@ namespace VSOptionsDialogResizer.Addin
         /// <seealso class='IDTExtensibility2' />
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
         {
+            _optionsDialogWatcher.StopListen();
         }
 
         /// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary>
